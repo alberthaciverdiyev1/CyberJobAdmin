@@ -1,0 +1,70 @@
+package pages
+
+
+type Banner struct {
+    Image    string
+    Location string
+    Link     string
+    StartAt  string
+    EndAt    string
+    IsActive bool
+}
+
+templ BannerList(banners []Banner) {
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-4xl font-bold text-gray-800">Bannerlər</h1>
+        <button class="bg-[#2D2D3E] text-white px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-gray-700 transition-colors">
+            <i class="fa-solid fa-plus"></i>
+            <span>Yeni Banner</span>
+        </button>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+        <table class="w-full text-left">
+            <thead class="bg-gray-50/50 border-b border-gray-100">
+                <tr class="text-gray-500 font-medium text-sm">
+                    <th class="px-8 py-5">Şəkil</th>
+                    <th class="py-5">Yerləşmə yeri</th>
+                    <th class="py-5">Link</th>
+                    <th class="py-5 text-center">Başlamaq</th>
+                    <th class="py-5 text-center">Bitmə</th>
+                    <th class="py-5 text-center">Status</th>
+                    <th class="px-8 py-5 text-right">Əməliyyatlar</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50">
+                for _, b := range banners {
+                    <tr class="hover:bg-gray-50/50 transition-colors group">
+                        <td class="px-8 py-5">
+                            <img src={ b.Image } class="w-20 h-12 object-cover rounded-xl shadow-sm" />
+                        </td>
+                        <td class="py-5 font-medium text-gray-700">{ b.Location }</td>
+                        <td class="py-5 text-gray-500 italic">{ b.Link }</td>
+                        <td class="py-5 text-center text-gray-600 font-medium">{ b.StartAt }</td>
+                        <td class="py-5 text-center text-gray-600 font-medium">{ b.EndAt }</td>
+                        <td class="py-5 text-center">
+                            if b.IsActive {
+                                <span class="px-4 py-1.5 rounded-full bg-green-100 text-green-600 text-xs font-bold uppercase tracking-wider">Aktiv</span>
+                            } else {
+                                <span class="px-4 py-1.5 rounded-full bg-gray-100 text-gray-400 text-xs font-bold uppercase tracking-wider">Deaktiv</span>
+                            }
+                        </td>
+                        <td class="px-8 py-5 text-right">
+                            <div class="flex justify-end gap-3 text-gray-400">
+                                <button class="hover:text-blue-500 transition-colors">
+                                    <i class={ "fa-solid", templ.KV("fa-eye", b.IsActive), templ.KV("fa-eye-slash", !b.IsActive) }></i>
+                                </button>
+                                <button class="hover:text-teal-500 transition-colors">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <button class="hover:text-red-500 transition-colors">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
