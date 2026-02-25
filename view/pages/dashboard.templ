@@ -1,0 +1,59 @@
+package pages
+
+import (
+    "github.com/alberthaciverdiyev1/CyberJobAdmin/internal/model"
+    "strconv"
+)
+
+templ Dashboard(stats model.DashboardStats, companies []model.CompanySummary) {
+    <h1 class="text-4xl font-bold text-gray-800 mb-8">İdarəetmə Paneli</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+        @statCard("Ümumi Elan sayı", strconv.Itoa(stats.TotalJobCount), "fa-solid fa-file-lines", "bg-blue-500")
+        @statCard("Şirkət sayı", strconv.Itoa(stats.TotalCompanyCount), "fa-solid fa-building", "bg-blue-600")
+        @statCard("Premium elan sayı", strconv.Itoa(stats.PremiumJobCount), "fa-solid fa-star", "bg-blue-500")
+        @statCard("Banner sayı", strconv.Itoa(stats.BannerCount), "fa-solid fa-image", "bg-blue-500")
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+        <table class="w-full text-left">
+            <thead class="bg-gray-50/50 border-b border-gray-100">
+                <tr class="text-gray-500 font-medium text-sm">
+                    <th class="px-8 py-5 w-16">#</th>
+                    <th class="py-5">Adı</th>
+                    <th class="py-5 text-center">Tarix</th>
+                    <th class="py-5 text-center">Elan sayı</th>
+                    <th class="py-5 text-center px-8">Premium elanlar</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50">
+                for i, c := range companies {
+                    <tr class="hover:bg-gray-50/50 transition-colors">
+                        <td class="px-8 py-5 text-gray-400 text-sm">{ strconv.Itoa(i + 1) }</td>
+                        <td class="py-5 font-semibold text-gray-700">{ c.Name }</td>
+                        <td class="py-5 text-center text-gray-500">
+                            <div class="flex items-center justify-center gap-2">
+                                <i class="fa-regular fa-calendar text-gray-400"></i>
+                                { c.Date }
+                            </div>
+                        </td>
+                        <td class="py-5 text-center font-bold text-gray-700">{ strconv.Itoa(c.JobCount) }</td>
+                        <td class="py-5 text-center font-bold text-gray-700 px-8">{ strconv.Itoa(c.PremiumJobCount) }</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+templ statCard(title, value, icon, iconBg string) {
+    <div class="bg-white p-8 rounded-[32px] shadow-sm border border-gray-100 flex justify-between items-start">
+        <div>
+            <p class="text-gray-500 text-sm font-medium mb-2">{ title }</p>
+            <h3 class="text-4xl font-bold text-gray-800">{ value }</h3>
+        </div>
+        <div class={ iconBg, "w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shadow-lg" }>
+            <i class={ icon }></i>
+        </div>
+    </div>
+}

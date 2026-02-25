@@ -3,53 +3,56 @@ package layout
 import "github.com/alberthaciverdiyev1/CyberJobAdmin/internal/model"
 
 var SideMenu = []model.MenuItem{
-    {Label: "İdarəetmə paneli", Path: "/dashboard", Icon: model.IconDashboard},
-    {Label: "Bannerlər", Path: "/banners", Icon: model.IconBanner},
-    {Label: "Elan", Path: "/elan", Icon: model.IconElan},
-    {Label: "Filtr", Path: "/filter", Icon: model.IconFilter},
-    {Label: "Premium Elanlar", Path: "/premium", Icon: model.IconPremium},
-    {Label: "Şirkətlər", Path: "/companies", Icon: model.IconCompany},
-    {Label: "Xidmətlər", Path: "/services", Icon: model.IconService},
-    {Label: "Haqqımızda", Path: "/about", Icon: model.IconAbout},
-    {Label: "Bloq", Path: "/blog", Icon: model.IconBlog},
+	{Label: "İdarəetmə paneli", Path: "/dashboard", Icon: model.IconDashboard},
+	{Label: "Bannerlər", Path: "/banners", Icon: model.IconBanner},
+	{Label: "Elan", Path: "/elan", Icon: model.IconElan},
+	{Label: "Filtr", Path: "/filter", Icon: model.IconFilter},
+	{Label: "Premium Elanlar", Path: "/premium", Icon: model.IconPremium},
+	{Label: "Şirkətlər", Path: "/companies", Icon: model.IconCompany},
+	{Label: "Xidmətlər", Path: "/services", Icon: model.IconService},
+	{Label: "Haqqımızda", Path: "/about", Icon: model.IconAbout},
+	{Label: "Bloq", Path: "/blog", Icon: model.IconBlog},
 }
 
-templ Sidebar() {
-    <aside class="w-72 h-screen bg-[#2D2D3E] text-white flex flex-col py-8 fixed left-0 top-0">
-        <div class="px-8 mb-12 flex items-center gap-3">
-            <div class="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
-                <i class="fa-solid fa-briefcase text-white text-sm"></i>
-            </div>
-            <span class="text-2xl font-bold tracking-tight text-white">CyberJob</span>
-        </div>
-
-        <nav class="flex-1 px-4 space-y-1 overflow-y-auto custom-scrollbar">
-            for _, item := range SideMenu {
-                <a hx-get={ item.Path }
-                   hx-target="#content-area"
-                   hx-push-url="true"
-                   class="flex items-center gap-4 px-6 py-4 rounded-2xl cursor-pointer text-gray-400 hover:bg-gray-700/30 hover:text-white transition-all duration-200 group">
-
-                    <i class={ item.Icon, "text-lg w-6 text-center group-hover:scale-110 transition-transform" }></i>
-
-                    <span class="font-medium text-[15px]">{ item.Label }</span>
-                </a>
-            }
-        </nav>
-
-        <div class="px-4 mt-auto">
-            <div class="p-4 bg-gray-800/50 rounded-2xl flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-500 to-blue-500 flex items-center justify-center text-xs font-bold">
-                    AD
-                </div>
-                <div class="flex-1 overflow-hidden">
-                    <p class="text-sm font-medium truncate">Admin Panel</p>
-                    <p class="text-xs text-gray-500 truncate">admin@cyberjob.az</p>
-                </div>
-                <button class="text-gray-400 hover:text-red-400">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                </button>
-            </div>
-        </div>
-    </aside>
+templ Sidebar(currentPath string) {
+	<aside class="w-72 h-screen bg-[#2D2D45] text-white flex flex-col py-8 fixed left-0 top-0">
+		<div class="px-8 mb-12 flex items-center gap-3">
+			<div class="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
+				<i class="fa-solid fa-briefcase text-white text-sm"></i>
+			</div>
+			<span class="text-2xl font-bold tracking-tight text-white">CyberJob</span>
+		</div>
+		<nav class="flex-1 px-4 space-y-1 overflow-y-auto custom-scrollbar">
+			for _, item := range SideMenu {
+				<a
+					hx-get={ item.Path }
+					hx-target="#content-area"
+					hx-push-url="true"
+					class={ "flex items-center gap-4 px-6 py-4 rounded-2xl cursor-pointer transition-all duration-200 group",
+                           templ.KV("bg-purple-600 text-white shadow-lg shadow-purple-500/20", currentPath == item.Path),
+                           templ.KV("text-gray-400 hover:bg-gray-700/30 hover:text-white", currentPath != item.Path) }
+				>
+					<i
+						class={ item.Icon, "text-lg w-6 text-center group-hover:scale-110 transition-transform",
+                               templ.KV("text-white", currentPath == item.Path) }
+					></i>
+					<span class="font-medium text-[15px]">{ item.Label }</span>
+				</a>
+			}
+		</nav>
+		<div class="px-4 mt-auto">
+			<div class="p-4 bg-gray-800/50 rounded-2xl flex items-center gap-3">
+				<div class="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-500 to-blue-500 flex items-center justify-center text-xs font-bold">
+					AD
+				</div>
+				<div class="flex-1 overflow-hidden">
+					<p class="text-sm font-medium truncate">Admin Panel</p>
+					<p class="text-xs text-gray-500 truncate">admin@cyberjob.az</p>
+				</div>
+				<button class="text-gray-400 hover:text-red-400">
+					<i class="fa-solid fa-right-from-bracket"></i>
+				</button>
+			</div>
+		</div>
+	</aside>
 }

@@ -22,6 +22,7 @@ func NewRouter(homeHdl *handler.HomeHandler, bannerHdl *handler.BannerHandler) *
 
 	r.Get("/banners", bannerHdl.List)
 	r.Get("/banners/new", bannerHdl.New)
+	r.Post("/banners", bannerHdl.Save)
 
 	return r
 }

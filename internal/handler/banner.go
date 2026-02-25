@@ -20,11 +20,16 @@ func parseDate(s string) time.Time {
 type BannerHandler struct{}
 
 func (h *BannerHandler) List(w http.ResponseWriter, r *http.Request) {
+	path := r.URL.Path
+
 	data := []model.Banner{
 		{
 			Image:    "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=200",
-			Location: "Ana səhifə", Link: "cyberjob/company.html",
-			StartAt: parseDate("21.12.25"), EndAt: parseDate("21.01.26"), IsActive: true,
+			Location: "Ana səhifə",
+			Link:     "cyberjob/company.html",
+			StartAt:  parseDate("21.12.25"),
+			EndAt:    parseDate("21.01.26"),
+			IsActive: true,
 		},
 		{
 			Image:    "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=200",
@@ -42,7 +47,7 @@ func (h *BannerHandler) List(w http.ResponseWriter, r *http.Request) {
 		pages.BannerList(data).Render(r.Context(), w)
 		return
 	}
-	layout.Base(pages.BannerList(data)).Render(r.Context(), w)
+	layout.Base(pages.BannerList(data), path).Render(r.Context(), w)
 }
 
 func (h *BannerHandler) New(w http.ResponseWriter, r *http.Request) {
@@ -50,23 +55,20 @@ func (h *BannerHandler) New(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *BannerHandler) Save(w http.ResponseWriter, r *http.Request) {
-	// 1. Dosya ve form verilerini parse et (Max 10MB)
+
 	if err := r.ParseMultipartForm(10 << 20); err != nil {
 		http.Error(w, "Fayl çox böyükdür", http.StatusBadRequest)
 		return
 	}
 
-	// 2. Form verilerini al
 	link := r.FormValue("link")
 	location := r.FormValue("location")
 	isDesktop := r.FormValue("is_desktop") == "on"
 
-	// 3. Dosyayı (Resmi) oku
 	file, header, err := r.FormFile("image")
 	if err == nil {
 		defer file.Close()
 
-		// Dosyayı static/uploads altına kaydet
 		filePath := "static/uploads/" + header.Filename
 		dst, _ := os.Create(filePath)
 		defer dst.Close()
@@ -74,11 +76,8 @@ func (h *BannerHandler) Save(w http.ResponseWriter, r *http.Request) {
 		fmt.Printf("Resim kaydedildi: %s\n", filePath)
 	}
 
-	// 4. Veritabanına Kayıt (Şimdilik Log basalım)
 	fmt.Printf("Yeni Banner: Link: %s, Yer: %s, Desktop: %v\n", link, location, isDesktop)
 
-	// 5. Başarılı olduktan sonra HTMX ile sayfayı yenile
-	// Tarayıcıya 'banners-updated' eventi göndererek tabloyu yeniletebiliriz
 	w.Header().Set("HX-Trigger", "banners-updated")
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("Uğurla yadda saxlanıldı!"))

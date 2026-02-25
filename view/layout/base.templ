@@ -1,6 +1,6 @@
 package layout
 
-templ Base(content templ.Component) {
+templ Base(content templ.Component,currentPath string) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -13,7 +13,7 @@ templ Base(content templ.Component) {
 		</head>
 		<body class="bg-[#F8F9FD]">
 			<div class="flex">
-				@Sidebar()
+				@Sidebar(currentPath)
 				<div class="flex-1 ml-72 min-h-screen">
 					<header class="h-20 flex items-center px-10 bg-white/50 backdrop-blur-sm sticky top-0">
 						<button class="p-2 hover:bg-gray-100 rounded-lg">
