@@ -1,0 +1,70 @@
+package company
+
+import "github.com/alberthaciverdiyev1/CyberJobAdmin/internal/model"
+
+templ CompanyForm(company *model.Company) {
+    <div id="company-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
+        <div class="bg-white w-[600px] rounded-[32px] p-10 shadow-2xl relative animate-in zoom-in duration-300">
+            <button onclick="document.getElementById('company-modal').remove()" class="absolute top-8 right-8 text-gray-400 hover:text-gray-600 transition-colors">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+
+            <h2 class="text-3xl font-bold text-[#1A1A1A] mb-8">Yeni Şirkət əlavə et</h2>
+
+            <form
+                hx-post="/companies"
+                hx-target="#company-table-body"
+                hx-swap="afterbegin"
+                hx-on::after-request="if(event.detail.successful) document.getElementById('company-modal').remove()"
+                class="space-y-5"
+            >
+                <div class="space-y-2">
+                    <label class="block text-sm font-bold text-[#1A1A1A]">Şirkət adı</label>
+                    <input type="text" name="name" placeholder="Şirkət adını əlavə edin"
+                           class="w-full bg-[#F3F4F6] border-none rounded-xl py-4 px-6 text-gray-600 focus:ring-2 focus:ring-purple-500/20 outline-none transition-all" required />
+                </div>
+
+                <div class="space-y-2">
+                    <label class="block text-sm font-bold text-[#1A1A1A]">Kateqoriyası</label>
+                    <input type="text" name="category" placeholder="Məişət texnikası və elektronika"
+                           class="w-full bg-[#F3F4F6] border-none rounded-xl py-4 px-6 text-gray-600 focus:ring-2 focus:ring-purple-500/20 outline-none transition-all" />
+                </div>
+
+                <div class="space-y-2">
+                    <label class="block text-sm font-bold text-[#1A1A1A]">Email</label>
+                    <input type="email" name="email" placeholder="email@example.com"
+                           class="w-full bg-[#F3F4F6] border-none rounded-xl py-4 px-6 text-gray-600 focus:ring-2 focus:ring-purple-500/20 outline-none transition-all" required />
+                </div>
+
+                <div class="space-y-2">
+                    <label class="block text-sm font-bold text-[#1A1A1A]">Telefon</label>
+                    <input type="text" name="phone" placeholder="+994 XX XXX XX XX"
+                           class="w-full bg-[#F3F4F6] border-none rounded-xl py-4 px-6 text-gray-600 focus:ring-2 focus:ring-purple-500/20 outline-none transition-all" />
+                </div>
+
+                <div class="space-y-2">
+                    <label class="block text-sm font-bold text-[#1A1A1A]">Ünvan</label>
+                    <input type="text" name="address" placeholder="Şirkət ünvanı"
+                           class="w-full bg-[#F3F4F6] border-none rounded-xl py-4 px-6 text-gray-600 focus:ring-2 focus:ring-purple-500/20 outline-none transition-all" />
+                </div>
+
+                <div class="space-y-2">
+                    <label class="block text-sm font-bold text-[#1A1A1A]">Haqqında</label>
+                    <textarea name="about" rows="4" placeholder="Şirkət haqqında məlumat yazın....."
+                              class="w-full bg-[#F3F4F6] border-none rounded-xl py-4 px-6 text-gray-600 focus:ring-2 focus:ring-purple-500/20 outline-none transition-all resize-none"></textarea>
+                </div>
+
+                <div class="flex justify-end gap-4 mt-8">
+                    <button type="button" onclick="document.getElementById('company-modal').remove()"
+                            class="px-8 py-3 border border-[#2D2D3E] rounded-xl font-bold text-[#2D2D3E] hover:bg-gray-50 transition-colors">
+                        Ləğv et
+                    </button>
+                    <button type="submit"
+                            class="px-10 py-3 bg-[#2D2D3E] text-white rounded-xl font-bold hover:bg-[#3D3D4E] transition-all">
+                        Yarat
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+}

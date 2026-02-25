@@ -1,0 +1,102 @@
+package company
+
+import (
+    "github.com/alberthaciverdiyev1/CyberJobAdmin/internal/model"
+    "fmt"
+)
+
+templ CompanyList(companies []model.Company) {
+    <div class="flex justify-between items-start mb-2">
+        <div>
+            <h1 class="text-4xl font-bold text-[#1A1A1A] mb-2">Şirkətlər</h1>
+            <p class="text-gray-400 text-sm">Qeydiyyatlı şirkətləri idarə edin</p>
+        </div>
+        <button
+            hx-get="/companies/new"
+            hx-target="body"
+            hx-swap="beforeend"
+            class="bg-[#2D2D3E] text-white px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-[#3D3D4E] transition-all shadow-lg shadow-gray-200"
+        >
+            <i class="fa-solid fa-plus"></i>
+            <span class="font-medium">Yeni Şirkət</span>
+        </button>
+    </div>
+
+    <div class="relative mb-8 mt-6">
+        <i class="fa-solid fa-magnifying-glass absolute left-6 top-1/2 -translate-y-1/2 text-gray-400"></i>
+        <input
+            type="text"
+            name="search"
+            placeholder="Şirkət axtar...."
+            hx-post="/companies/search"
+            hx-trigger="keyup changed delay:500ms"
+            hx-target="#company-table-body"
+            class="w-full bg-[#F3F4F6]/50 border-none rounded-2xl py-4 pl-14 pr-6 text-gray-600 focus:ring-2 focus:ring-purple-500/20 transition-all outline-none"
+        />
+    </div>
+
+    <div class="bg-white rounded-[32px] border border-gray-100 shadow-sm overflow-hidden">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="text-[#1A1A1A] font-bold text-[15px] border-b border-gray-50">
+                    <th class="px-10 py-6">Ad</th>
+                    <th class="py-6">Dərc Tarixi</th>
+                    <th class="py-6 text-center">Ümumi elan sayı</th>
+                    <th class="py-6 text-center">Aktiv elan sayı</th>
+                    <th class="px-10 py-6 text-right">Əməliyyatlar</th>
+                </tr>
+            </thead>
+            <tbody id="company-table-body" class="divide-y divide-gray-50">
+                for _, c := range companies {
+                    @CompanyRow(c)
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+templ CompanyRow(c model.Company) {
+    <tr class="hover:bg-gray-50/50 transition-colors group">
+        <td class="px-10 py-5 font-semibold text-gray-700">{ c.Name }</td>
+        <td class="py-5 text-gray-500">
+            <div class="flex items-center gap-2">
+                <i class="fa-regular fa-calendar text-gray-400"></i>
+                { c.CreatedAt.Format("02 Yanvar 2006") }
+            </div>
+        </td>
+        <td class="py-5 text-center text-gray-500 font-medium">{ fmt.Sprint(c.TotalAds) }</td>
+        <td class="py-5 text-center text-gray-500 font-medium">{ fmt.Sprint(c.ActiveAds) }</td>
+        <td class="px-10 py-5 text-right">
+            <div class="flex justify-end gap-4 items-center">
+                <button
+                    hx-post={ fmt.Sprintf("/companies/toggle-visibility/%d", c.ID) }
+                    class="text-gray-400 hover:text-blue-500 transition-colors"
+                >
+                    if c.IsVisible {
+                        <i class="fa-regular fa-eye text-lg"></i>
+                    } else {
+                        <i class="fa-regular fa-eye-slash text-lg"></i>
+                    }
+                </button>
+
+                <button
+                    hx-get={ fmt.Sprintf("/companies/edit/%d", c.ID) }
+                    hx-target="body"
+                    class="text-[#4FD1C5] hover:scale-110 transition-transform"
+                >
+                    <i class="fa-solid fa-pen-to-square text-lg"></i>
+                </button>
+
+                <button
+                    hx-delete={ fmt.Sprintf("/companies/delete/%d", c.ID) }
+                    hx-confirm="Bu şirkəti silmək istədiyinizə əminsiniz?"
+                    hx-target="closest tr"
+                    hx-swap="outerHTML"
+                    class="text-[#E53E3E] hover:scale-110 transition-transform"
+                >
+                    <i class="fa-solid fa-trash-can text-lg"></i>
+                </button>
+            </div>
+        </td>
+    </tr>
+}

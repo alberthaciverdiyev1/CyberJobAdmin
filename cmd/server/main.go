@@ -12,8 +12,9 @@ func main() {
 
 	homeHdl := &handler.HomeHandler{}
 	bannerHdl := &handler.BannerHandler{}
+	companyHdl := &handler.CompanyHandler{}
 
-	router := routes.NewRouter(homeHdl, bannerHdl)
+	router := routes.NewRouter(homeHdl, bannerHdl, companyHdl)
 
 	fmt.Println("Server running on http://localhost:8081 ")
 	err := http.ListenAndServe(":8081", router)
