@@ -1,0 +1,37 @@
+package layout
+
+templ Base(content templ.Component) {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<title>CyberJob Panel</title>
+			<script src="https://unpkg.com/htmx.org@1.9.10"></script>
+			<script src="https://cdn.tailwindcss.com"></script>
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+		</head>
+		<body class="bg-[#F8F9FD]">
+			<div class="flex">
+				@Sidebar()
+				<div class="flex-1 ml-72 min-h-screen">
+					<header class="h-20 flex items-center px-10 bg-white/50 backdrop-blur-sm sticky top-0">
+						<button class="p-2 hover:bg-gray-100 rounded-lg">
+							<svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+							</svg>
+						</button>
+					</header>
+					<main id="content-area" class="p-10">
+						if content != nil {
+							@content
+						} else {
+							<h1 class="text-3xl font-bold text-gray-800">Hoş Geldiniz</h1>
+							<p class="text-gray-500 mt-2">Lütfen soldan bir işlem seçin.</p>
+						}
+					</main>
+				</div>
+			</div>
+		</body>
+	</html>
+}
