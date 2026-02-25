@@ -21,6 +21,7 @@ func NewRouter(homeHdl *handler.HomeHandler, bannerHdl *handler.BannerHandler) *
 	r.Get("/dashboard", homeHdl.Dashboard)
 
 	r.Get("/banners", bannerHdl.List)
+	r.Get("/banners/new", bannerHdl.New)
 
 	return r
 }
