@@ -14,8 +14,9 @@ func main() {
 	bannerHdl := &handler.BannerHandler{}
 	companyHdl := &handler.CompanyHandler{}
 	filterHdl := &handler.FilterHandler{}
+	blogHdl := &handler.BlogHandler{}
 
-	router := routes.NewRouter(homeHdl, bannerHdl, companyHdl, filterHdl)
+	router := routes.NewRouter(homeHdl, bannerHdl, companyHdl, filterHdl, blogHdl)
 
 	fmt.Println("Server running on http://localhost:8081 ")
 	err := http.ListenAndServe(":8081", router)

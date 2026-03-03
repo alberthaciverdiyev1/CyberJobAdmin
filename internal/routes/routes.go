@@ -8,7 +8,7 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-func NewRouter(homeHdl *handler.HomeHandler, bannerHdl *handler.BannerHandler, companyHandler *handler.CompanyHandler, filterHandler *handler.FilterHandler) *chi.Mux {
+func NewRouter(homeHdl *handler.HomeHandler, bannerHdl *handler.BannerHandler, companyHandler *handler.CompanyHandler, filterHandler *handler.FilterHandler, blogHandler *handler.BlogHandler) *chi.Mux {
 	r := chi.NewRouter()
 
 	r.Use(middleware.Logger)
@@ -31,5 +31,12 @@ func NewRouter(homeHdl *handler.HomeHandler, bannerHdl *handler.BannerHandler, c
 	r.Get("/filters", filterHandler.List)
 	r.Post("/filters", filterHandler.Save)
 	r.Delete("/filters/{id}", filterHandler.Delete)
+
+	r.Get("/blogs", blogHandler.List)
+	r.Delete("/blogs/{id}", blogHandler.Delete)
+	r.Route("/blogs/create", func(r chi.Router) {
+		r.Get("/", blogHandler.CreateForm)
+		//r.Post("/", blogHandler.Save)
+	})
 	return r
 }

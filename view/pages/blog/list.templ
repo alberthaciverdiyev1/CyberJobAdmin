@@ -1,0 +1,62 @@
+package blog
+
+import (
+    "github.com/alberthaciverdiyev1/CyberJobAdmin/internal/model"
+    "fmt"
+)
+
+templ BlogList(posts []model.BlogPost) {
+    <div class="flex justify-between items-start mb-2">
+        <div>
+            <h1 class="text-3xl font-bold text-[#1F2937]">Bloq İdarəetməsi</h1>
+            <p class="text-gray-400 text-sm mt-1 font-medium">Bloq yazılarını əlavə edin və idarə edin</p>
+        </div>
+
+        <button
+            hx-get="/blogs/create"
+            hx-target="#content-area"
+            hx-push-url="true"
+            class="bg-[#2D2D3F] text-white px-6 py-3 rounded-xl font-medium hover:bg-slate-700 transition-all flex items-center gap-2"
+        >
+            <i class="fa-solid fa-plus text-xs"></i> Yeni Bloq
+        </button>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
+        for _, post := range posts {
+            @BlogCard(post)
+        }
+    </div>
+}
+
+templ BlogCard(post model.BlogPost) {
+    <div class="bg-white rounded-[32px] overflow-hidden shadow-sm border border-gray-100 flex flex-col group">
+        <div class="h-56 overflow-hidden">
+            <img src={ post.ImageURL }
+                 alt="Blog Cover"
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+        </div>
+        <div class="p-6">
+            <h3 class="font-bold text-[#1F2937] text-lg leading-tight mb-2">{ post.Title }</h3>
+            <p class="text-gray-400 text-sm mb-6">{ post.Date }</p>
+
+            <div class="flex gap-3">
+                <button
+                    hx-get={ fmt.Sprintf("/blog/edit/%d", post.ID) }
+                    hx-target="#content-area"
+                    class="flex-1 border border-gray-200 py-3 rounded-xl text-sm font-bold text-[#1F2937] hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
+                >
+                    <i class="fa-regular fa-pen-to-square"></i> Redaktə et
+                </button>
+                <button
+                    hx-delete={ fmt.Sprintf("/api/blog/%d", post.ID) }
+                    hx-confirm="Bu bloq yazısını silmək istədiyinizdən əminsiniz?"
+                    hx-target="#content-area"
+                    class="w-12 border border-gray-200 py-3 rounded-xl text-red-400 hover:bg-red-50 transition-all flex items-center justify-center"
+                >
+                    <i class="fa-regular fa-trash-can"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+}
