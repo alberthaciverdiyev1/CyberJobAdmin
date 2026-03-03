@@ -6,39 +6,42 @@ import (
 )
 
 templ Dashboard(stats model.DashboardStats, companies []model.CompanySummary) {
-    <h1 class="text-4xl font-bold text-gray-800 mb-8">İdarəetmə Paneli</h1>
+    <div class="flex items-center gap-4 mb-10">
+        <i class="fa-solid fa-bars text-xl text-gray-600 cursor-pointer hover:text-gray-900 transition-colors"></i>
+        <h1 class="text-3xl font-bold text-[#1F2937]">İdarəetmə Paneli</h1>
+    </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-        @statCard("Ümumi Elan sayı", strconv.Itoa(stats.TotalJobCount), "fa-solid fa-file-lines", "bg-blue-500")
-        @statCard("Şirkət sayı", strconv.Itoa(stats.TotalCompanyCount), "fa-solid fa-building", "bg-blue-600")
-        @statCard("Premium elan sayı", strconv.Itoa(stats.PremiumJobCount), "fa-solid fa-star", "bg-blue-500")
-        @statCard("Banner sayı", strconv.Itoa(stats.BannerCount), "fa-solid fa-image", "bg-blue-500")
+        @statCard("Ümumi Elan sayı", strconv.Itoa(stats.TotalJobCount), "fa-regular fa-file-lines")
+        @statCard("Şirkət sayı", strconv.Itoa(stats.TotalCompanyCount), "fa-solid fa-city")
+        @statCard("Premium elan sayı", strconv.Itoa(stats.PremiumJobCount), "fa-solid fa-star")
+        @statCard("Banner sayı", strconv.Itoa(stats.BannerCount), "fa-regular fa-image")
     </div>
 
     <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-        <table class="w-full text-left">
+        <table class="w-full text-left border-collapse">
             <thead class="bg-gray-50/50 border-b border-gray-100">
-                <tr class="text-gray-500 font-medium text-sm">
+                <tr class="text-gray-400 text-[11px] font-bold uppercase tracking-wider">
                     <th class="px-8 py-5 w-16">#</th>
-                    <th class="py-5">Adı</th>
-                    <th class="py-5 text-center">Tarix</th>
-                    <th class="py-5 text-center">Elan sayı</th>
-                    <th class="py-5 text-center px-8">Premium elanlar</th>
+                    <th class="px-8 py-5">Adı</th>
+                    <th class="px-8 py-5">Tarix</th>
+                    <th class="px-8 py-5 text-center">Elan sayı</th>
+                    <th class="px-8 py-5 text-center">Premium elanlar</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-50">
+            <tbody class="divide-y divide-gray-50 text-sm">
                 for i, c := range companies {
-                    <tr class="hover:bg-gray-50/50 transition-colors">
-                        <td class="px-8 py-5 text-gray-400 text-sm">{ strconv.Itoa(i + 1) }</td>
-                        <td class="py-5 font-semibold text-gray-700">{ c.Name }</td>
-                        <td class="py-5 text-center text-gray-500">
-                            <div class="flex items-center justify-center gap-2">
-                                <i class="fa-regular fa-calendar text-gray-400"></i>
+                    <tr class="hover:bg-gray-50/80 transition-colors">
+                        <td class="px-8 py-5 text-gray-400 font-medium">{ strconv.Itoa(i + 1) }</td>
+                        <td class="px-8 py-5 text-gray-800 font-semibold">{ c.Name }</td>
+                        <td class="px-8 py-5 text-gray-500 font-medium">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-regular fa-calendar-days text-gray-400"></i>
                                 { c.Date }
                             </div>
                         </td>
-                        <td class="py-5 text-center font-bold text-gray-700">{ strconv.Itoa(c.JobCount) }</td>
-                        <td class="py-5 text-center font-bold text-gray-700 px-8">{ strconv.Itoa(c.PremiumJobCount) }</td>
+                        <td class="px-8 py-5 text-center font-bold text-gray-700">{ strconv.Itoa(c.JobCount) }</td>
+                        <td class="px-8 py-5 text-center font-bold text-gray-700">{ strconv.Itoa(c.PremiumJobCount) }</td>
                     </tr>
                 }
             </tbody>
@@ -46,14 +49,14 @@ templ Dashboard(stats model.DashboardStats, companies []model.CompanySummary) {
     </div>
 }
 
-templ statCard(title, value, icon, iconBg string) {
-    <div class="bg-white p-8 rounded-[32px] shadow-sm border border-gray-100 flex justify-between items-start">
+templ statCard(title, value, icon string) {
+    <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex justify-between items-center transition-transform hover:scale-[1.02]">
         <div>
-            <p class="text-gray-500 text-sm font-medium mb-2">{ title }</p>
-            <h3 class="text-4xl font-bold text-gray-800">{ value }</h3>
+            <p class="text-gray-500 text-sm font-medium mb-1">{ title }</p>
+            <h3 class="text-3xl font-bold text-gray-800">{ value }</h3>
         </div>
-        <div class={ iconBg, "w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl shadow-lg" }>
-            <i class={ icon }></i>
+        <div class="w-12 h-12 bg-[#4D89FF] rounded-xl flex items-center justify-center shadow-md shadow-blue-200">
+            <i class={ icon, "text-white text-xl" }></i>
         </div>
     </div>
 }

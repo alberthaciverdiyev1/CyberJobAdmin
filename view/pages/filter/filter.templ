@@ -1,0 +1,113 @@
+package filter
+
+import (
+    "github.com/alberthaciverdiyev1/CyberJobAdmin/internal/model"
+    "fmt"
+)
+
+templ FiltersPage(filters []model.FilterFullResponse) {
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+        <div>
+            <div class="flex items-center gap-4 mb-1">
+                <i class="fa-solid fa-bars text-xl text-gray-600 cursor-pointer hover:text-gray-900 transition-colors"></i>
+                <h1 class="text-2xl font-bold text-[#1F2937]">İş Elanları - Filter İdarəsi</h1>
+            </div>
+            <p class="text-gray-400 text-sm font-medium ml-9">Sistemdəki əsas filter kateqoriyalarını idarə edin</p>
+        </div>
+
+        <button
+            onclick="document.getElementById('createFilterModal').classList.remove('hidden'); document.getElementById('createFilterModal').classList.add('flex')"
+            class="bg-[#2D2D3F] text-white px-6 py-2.5 rounded-lg font-bold text-sm hover:bg-slate-700 transition-all flex items-center gap-2 shadow-sm"
+        >
+            <i class="fa-solid fa-plus text-[10px]"></i> Yeni Filter
+        </button>
+    </div>
+
+    <div class="max-w-6xl space-y-4">
+        for _, filter := range filters {
+            <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="p-6 flex justify-between items-center">
+                    <div class="flex items-center gap-6">
+                        <div>
+                            <span class="text-[10px] font-bold text-blue-500 uppercase tracking-widest block mb-1">Key: { filter.Key }</span>
+                            <h2 class="text-lg font-bold text-[#1F2937]">{ filter.NameAz }</h2>
+                        </div>
+                        <div class="hidden md:flex gap-3 border-l pl-6 border-gray-100">
+                            <div class="text-xs text-gray-400">
+                                <span class="font-bold">EN:</span> { filter.NameEn }
+                            </div>
+                            <div class="text-xs text-gray-400">
+                                <span class="font-bold">RU:</span> { filter.NameRu }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button class="p-2 text-gray-400 hover:text-green-600 transition-colors">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                        </button>
+                        <button
+                            hx-delete={ fmt.Sprintf("/api/filters/%d", filter.ID) }
+                            hx-confirm="Bu filteri silmək istədiyinizdən əminsiniz?"
+                            class="p-2 text-gray-400 hover:text-red-600 transition-colors"
+                        >
+                            <i class="fa-regular fa-trash-can"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div id="createFilterModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden items-center justify-center z-[999] p-4">
+        <div class="bg-white w-full max-w-2xl rounded-[32px] p-8 shadow-2xl relative">
+            <button
+                onclick="this.closest('#createFilterModal').classList.add('hidden'); this.closest('#createFilterModal').classList.remove('flex')"
+                class="absolute top-6 right-6 text-gray-400 hover:text-gray-800 transition-colors"
+            >
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <h2 class="text-2xl font-bold text-[#1F2937] mb-6">Yeni Filter Kateqoriyası</h2>
+
+            <form hx-post="/api/filters" hx-target="#content-area" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-bold text-[#1F2937] mb-2">Filter Açar Sözü (Key):</label>
+                    <input type="text" name="key" placeholder="məs: salary, job_type" required
+                        class="w-full px-4 py-3 bg-[#F8F9FA] rounded-xl border-none focus:ring-2 focus:ring-blue-400 outline-none text-sm font-mono"/>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-bold text-[#1F2937] mb-2">Ad (AZ):</label>
+                        <input type="text" name="name_az" placeholder="Maaş" required
+                            class="w-full px-4 py-3 bg-[#F8F9FA] rounded-xl border-none focus:ring-2 focus:ring-blue-400 outline-none text-sm"/>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-[#1F2937] mb-2">Ad (EN):</label>
+                        <input type="text" name="name_en" placeholder="Salary" required
+                            class="w-full px-4 py-3 bg-[#F8F9FA] rounded-xl border-none focus:ring-2 focus:ring-blue-400 outline-none text-sm"/>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-[#1F2937] mb-2">Ad (RU):</label>
+                        <input type="text" name="name_ru" placeholder="Зарплата" required
+                            class="w-full px-4 py-3 bg-[#F8F9FA] rounded-xl border-none focus:ring-2 focus:ring-blue-400 outline-none text-sm"/>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4 border-t border-gray-50">
+                    <button
+                        type="button"
+                        onclick="document.getElementById('createFilterModal').classList.add('hidden'); document.getElementById('createFilterModal').classList.remove('flex')"
+                        class="px-8 py-3 border border-gray-200 rounded-xl font-bold text-[#1F2937] text-sm hover:bg-gray-50 transition-all"
+                    >
+                        Ləğv et
+                    </button>
+                    <button type="submit" class="px-12 py-3 bg-[#2D2D3F] text-white rounded-xl font-bold text-sm hover:bg-slate-700 transition-all shadow-lg">
+                        Yarat
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+}

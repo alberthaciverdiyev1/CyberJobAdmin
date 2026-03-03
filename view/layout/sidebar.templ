@@ -1,58 +1,106 @@
 package layout
 
-import "github.com/alberthaciverdiyev1/CyberJobAdmin/internal/model"
+import (
+    "github.com/alberthaciverdiyev1/CyberJobAdmin/internal/model"
+    "strings"
+)
 
 var SideMenu = []model.MenuItem{
-	{Label: "İdarəetmə paneli", Path: "/dashboard", Icon: model.IconDashboard},
-	{Label: "Bannerlər", Path: "/banners", Icon: model.IconBanner},
-	{Label: "Elan", Path: "/elan", Icon: model.IconElan},
-	{Label: "Filtr", Path: "/filter", Icon: model.IconFilter},
-	{Label: "Premium Elanlar", Path: "/premium", Icon: model.IconPremium},
-	{Label: "Şirkətlər", Path: "/companies", Icon: model.IconCompany},
-	{Label: "Xidmətlər", Path: "/services", Icon: model.IconService},
-	{Label: "Haqqımızda", Path: "/about", Icon: model.IconAbout},
-	{Label: "Bloq", Path: "/blog", Icon: model.IconBlog},
+    {Label: "İdarəetmə paneli", Path: "/dashboard", Icon: "fa-solid fa-border-all"},
+    {Label: "Bannerlər", Path: "/banners", Icon: "fa-regular fa-image"},
+    {Label: "Filtr", Path: "/filters", Icon: "fa-solid fa-filter"},
+    {Label: "Premium Elanlar", Path: "/premium", Icon: "fa-regular fa-star"},
+    {Label: "Şirkətlər", Path: "/companies", Icon: "fa-regular fa-building"},
+    {Label: "Xidmətlər", Path: "/services", Icon: "fa-solid fa-briefcase"},
+    {Label: "Haqqımızda", Path: "/about", Icon: "fa-solid fa-circle-info"},
+    {Label: "Bloq", Path: "/blog", Icon: "fa-regular fa-pen-to-square"},
 }
 
 templ Sidebar(currentPath string) {
-	<aside class="w-72 h-screen bg-[#2D2D45] text-white flex flex-col py-8 fixed left-0 top-0">
-		<div class="px-8 mb-12 flex items-center gap-3">
-			<div class="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
-				<i class="fa-solid fa-briefcase text-white text-sm"></i>
-			</div>
-			<span class="text-2xl font-bold tracking-tight text-white">CyberJob</span>
-		</div>
-		<nav class="flex-1 px-4 space-y-1 overflow-y-auto custom-scrollbar">
-			for _, item := range SideMenu {
-				<a
-					hx-get={ item.Path }
-					hx-target="#content-area"
-					hx-push-url="true"
-					class={ "flex items-center gap-4 px-6 py-4 rounded-2xl cursor-pointer transition-all duration-200 group",
-                           templ.KV("bg-purple-600 text-white shadow-lg shadow-purple-500/20", currentPath == item.Path),
-                           templ.KV("text-gray-400 hover:bg-gray-700/30 hover:text-white", currentPath != item.Path) }
-				>
-					<i
-						class={ item.Icon, "text-lg w-6 text-center group-hover:scale-110 transition-transform",
-                               templ.KV("text-white", currentPath == item.Path) }
-					></i>
-					<span class="font-medium text-[15px]">{ item.Label }</span>
-				</a>
-			}
-		</nav>
-		<div class="px-4 mt-auto">
-			<div class="p-4 bg-gray-800/50 rounded-2xl flex items-center gap-3">
-				<div class="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-500 to-blue-500 flex items-center justify-center text-xs font-bold">
-					AD
-				</div>
-				<div class="flex-1 overflow-hidden">
-					<p class="text-sm font-medium truncate">Admin Panel</p>
-					<p class="text-xs text-gray-500 truncate">admin@cyberjob.az</p>
-				</div>
-				<button class="text-gray-400 hover:text-red-400">
-					<i class="fa-solid fa-right-from-bracket"></i>
-				</button>
-			</div>
-		</div>
-	</aside>
+    <aside class="w-72 bg-[#2D2D3F] min-h-screen text-white flex flex-col sticky top-0 overflow-y-auto">
+        <div class="p-8 flex items-center gap-3">
+            <div class="w-10 h-10 bg-[#3DD598] rounded-xl flex items-center justify-center">
+                <i class="fa-solid fa-bolt text-white text-xl"></i>
+            </div>
+            <span class="text-2xl font-bold tracking-tight">CyberJob</span>
+        </div>
+
+        <nav class="flex-1 px-4 space-y-2">
+            for _, item := range SideMenu {
+                <a
+                    href={ templ.SafeURL(item.Path) }
+                    hx-get={ item.Path }
+                    hx-target="#content-area"
+                    hx-push-url="true"
+                    class={ "flex items-center gap-4 p-3 rounded-xl transition-all group",
+                        templ.KV("bg-[#7C3AED] text-white", currentPath == item.Path),
+                        templ.KV("text-gray-400 hover:bg-gray-700 hover:text-white", currentPath != item.Path) }
+                >
+                    <i class={ item.Icon, "text-lg w-5 text-center group-hover:scale-110 transition-transform" }></i>
+                    <span class="font-medium text-sm">{ item.Label }</span>
+                </a>
+            }
+
+            <div class="space-y-1">
+                {{ isElanActive := strings.Contains(currentPath, "vacancy") || currentPath == "/elan" }}
+                <button
+                    id="elan-menu-btn"
+                    class={ "w-full flex items-center justify-between p-3 rounded-xl transition-all cursor-pointer group",
+                        templ.KV("bg-[#7C3AED] text-white", isElanActive),
+                        templ.KV("text-gray-400 hover:bg-gray-700 hover:text-white", !isElanActive) }
+                >
+                    <div class="flex items-center gap-4">
+                        <i class="fa-regular fa-plus-square text-lg w-5 text-center group-hover:scale-110 transition-transform"></i>
+                        <span class="font-medium text-sm">Elan</span>
+                    </div>
+                    <i id="elan-chevron"
+                       class="fa-solid fa-chevron-right text-[10px] transition-transform duration-300"
+                       style={ templ.SafeCSS(inlineChevronStyle(isElanActive)) }>
+                    </i>
+                </button>
+
+                <div id="elan-submenu" class={ "pl-12 pr-4 py-2 space-y-4", templ.KV("hidden", !isElanActive) }>
+                    @SubmenuItem("Gözləyən elanlar", "/pending-vacancies", currentPath)
+                    @SubmenuItem("Elan yarat", "/add-vacancy", currentPath)
+                    @SubmenuItem("Aktiv elanlar", "/active-vacancy", currentPath)
+                </div>
+            </div>
+        </nav>
+
+        <div class="p-4 mt-auto border-t border-gray-700/50">
+            <div class="p-3 bg-gray-800/40 rounded-2xl flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#7C3AED] to-[#3DD598] flex items-center justify-center text-xs font-bold">
+                    AD
+                </div>
+                <div class="flex-1 overflow-hidden">
+                    <p class="text-xs font-semibold truncate text-white">Admin Panel</p>
+                    <p class="text-[10px] text-gray-500 truncate">admin@cyberjob.az</p>
+                </div>
+                <button class="text-gray-500 hover:text-red-400 transition-colors">
+                    <i class="fa-solid fa-right-from-bracket text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </aside>
+}
+
+templ SubmenuItem(label, path, currentPath string) {
+    <a
+        href={ templ.SafeURL(path) }
+        hx-get={ path }
+        hx-target="#content-area"
+        hx-push-url="true"
+        class={ "submenu-item block text-[13px] transition-colors",
+            templ.KV("text-white font-bold", currentPath == path),
+            templ.KV("text-gray-400 hover:text-white", currentPath != path) }
+    >
+        { label }
+    </a>
+}
+
+func inlineChevronStyle(isActive bool) string {
+    if isActive {
+        return "transform: rotate(90deg);"
+    }
+    return ""
 }
