@@ -16,33 +16,19 @@ type BannerHandler struct{}
 
 func (h *BannerHandler) List(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path
+	ctx := r.Context()
 
-	data := []model.Banner{
-		{
-			Image:    "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=200",
-			Location: "Ana səhifə",
-			Link:     "cyberjob/company.html",
-			StartAt:  utils.ParseDate("21.12.25"),
-			EndAt:    utils.ParseDate("21.01.26"),
-			IsActive: true,
-		},
-		{
-			Image:    "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=200",
-			Location: "Vakansiya list", Link: "cyberjob/company.html",
-			StartAt: utils.ParseDate("21.12.25"), EndAt: utils.ParseDate("21.01.26"), IsActive: true,
-		},
-		{
-			Image:    "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=200",
-			Location: "Ana səhifə-2", Link: "cyberjob/company.html",
-			StartAt: utils.ParseDate("01.11.25"), EndAt: utils.ParseDate("21.12.26"), IsActive: false,
-		},
+	banners, err := utils.FetchAPI[[]model.Banner]("http://localhost:8080/banners")
+	if err != nil {
+		http.Error(w, "Banners Could Not Loaded", http.StatusInternalServerError)
+		return
 	}
 
 	if r.Header.Get("HX-Request") == "true" {
-		pages.BannerList(data).Render(r.Context(), w)
+		pages.BannerList(banners).Render(ctx, w)
 		return
 	}
-	layout.Base(pages.BannerList(data), path).Render(r.Context(), w)
+	layout.Base(pages.BannerList(banners), path).Render(ctx, w)
 }
 
 func (h *BannerHandler) New(w http.ResponseWriter, r *http.Request) {
