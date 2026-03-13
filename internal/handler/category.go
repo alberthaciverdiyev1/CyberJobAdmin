@@ -66,7 +66,6 @@ func (h *CategoryHandler) Create(w http.ResponseWriter, r *http.Request) {
 		ParentID: parentID,
 	}
 
-	// API-ya göndəririk
 	newCategory, err := utils.Post[model.CategoryResponse](h.APIClient, "/categories", req)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -74,31 +73,34 @@ func (h *CategoryHandler) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// HTMX: Yeni sətiri cədvələ əlavə edirik
 	category.CategoryRow(newCategory, 0).Render(ctx, w)
 }
 
 func (h *CategoryHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
 
-	// API-ya silmə sorğusu atırıq
 	_, err := utils.Delete[any](h.APIClient, fmt.Sprintf("/categories/%s", idStr))
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
-	// HTMX uğurlu silmədən sonra sətiri yox edəcək (hx-swap="outerHTML" olduğu üçün boş cavab kifayətdir)
 	w.WriteHeader(http.StatusOK)
 }
 
 func (h *CategoryHandler) UpdateView(w http.ResponseWriter, r *http.Request) {
-	//idStr := chi.URLParam(r, "id")
+	idStr := chi.URLParam(r, "id")
 
-	// Mövcud məlumatları və valideyn ola biləcəkləri çəkirik
-	//cat, _ := utils.Get[model.CategoryResponse](h.APIClient, "/categories/"+idStr)
-	//parents, _ := utils.Get[[]model.CategoryResponse](h.APIClient, "/categories/simple")
+	cat, err := utils.Get[model.CategoryResponse](h.APIClient, "/categories/"+idStr)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	parents, _ := utils.Get[[]model.CategoryResponse](h.APIClient, "/categories/simple")
 
-	// Qeyd: Update formunu yaratmalısan (Create formuna bənzəyir amma içində datalar olur)
-	// category.CategoryUpdateForm(cat, parents).Render(r.Context(), w)
+	category.CategoryUpdateForm(cat, parents).Render(r.Context(), w)
 }
+
+//func (h *CategoryHandler) Update(w http.ResponseWriter, r *http.Request) {
+//	idStr := chi.URLParam(r, "id")
+//}

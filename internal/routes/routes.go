@@ -43,6 +43,7 @@ func NewRouter(homeHdl handler.HomeHandler, bannerHdl handler.BannerHandler, com
 	r.Delete("/categories/{id}", categoryHandler.Delete)
 	r.Get("/categories/new", categoryHandler.CreateView)
 	r.Post("/categories", categoryHandler.Create)
+	r.Get("/categories/edit/{id}", categoryHandler.UpdateView)
 
 	return r
 }

@@ -34,7 +34,7 @@ templ CategoryUpdateForm(category model.CategoryResponse, parents []model.Catego
                     <label class="block text-sm font-bold text-[#1A1A1A]">İkon (FontAwesome)</label>
                     <div class="flex gap-4 items-center">
                         <div class="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-gray-600">
-                            <i class={ fmt.Sprintf("%s text-xl", category.Icon) }></i>
+                           @templ.Raw(category.Icon)
                         </div>
                         <input type="text" name="icon"
                                value={ category.Icon }
