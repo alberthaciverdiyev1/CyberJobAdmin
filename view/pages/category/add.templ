@@ -1,0 +1,59 @@
+package category
+
+import "github.com/alberthaciverdiyev1/CyberJobAdmin/internal/model"
+import "fmt"
+
+templ CategoryCreateForm(parents []model.CategoryResponse) {
+    <div id="category-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
+        <div class="bg-white w-[550px] rounded-[32px] p-10 shadow-2xl relative animate-in zoom-in duration-300">
+            <button onclick="document.getElementById('category-modal').remove()" class="absolute top-8 right-8 text-gray-400 hover:text-gray-600 transition-colors">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+
+            <h2 class="text-3xl font-bold text-[#1A1A1A] mb-8">Yeni Kateqoriya</h2>
+
+            <form
+                hx-post="/categories"
+                hx-target="#category-table-body"
+                hx-swap="afterbegin"
+                hx-on::after-request="if(event.detail.successful) document.getElementById('category-modal').remove()"
+                class="space-y-5"
+            >
+                <div class="space-y-2">
+                    <label class="block text-sm font-bold text-[#1A1A1A]">Kateqoriya adı</label>
+                    <input type="text" name="name" placeholder="Məs: Proqramlaşdırma"
+                           class="w-full bg-[#F3F4F6] border-none rounded-xl py-4 px-6 text-gray-600 focus:ring-2 focus:ring-purple-500/20 outline-none transition-all" required />
+                </div>
+
+                <div class="space-y-2">
+                    <label class="block text-sm font-bold text-[#1A1A1A]">İkon (FontAwesome klası)</label>
+                    <input type="text" name="icon" placeholder="Məs: fa-solid fa-code"
+                           class="w-full bg-[#F3F4F6] border-none rounded-xl py-4 px-6 text-gray-600 focus:ring-2 focus:ring-purple-500/20 outline-none transition-all" required />
+                    <p class="text-xs text-gray-400">Nümunə: fa-solid fa-palette, fa-solid fa-laptop-code</p>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="block text-sm font-bold text-[#1A1A1A]">Üst Kateqoriya (Opsional)</label>
+                    <select name="parent_id"
+                            class="w-full bg-[#F3F4F6] border-none rounded-xl py-4 px-6 text-gray-600 focus:ring-2 focus:ring-purple-500/20 outline-none transition-all appearance-none">
+                        <option value="">Ana Kateqoriya (Yoxdur)</option>
+                        for _, p := range parents {
+                            <option value={ fmt.Sprint(p.ID) }>{ p.Name }</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="flex justify-end gap-4 mt-8">
+                    <button type="button" onclick="document.getElementById('category-modal').remove()"
+                            class="px-8 py-3 border border-[#2D2D3E] rounded-xl font-bold text-[#2D2D3E] hover:bg-gray-50 transition-colors">
+                        Ləğv et
+                    </button>
+                    <button type="submit"
+                            class="px-10 py-3 bg-[#2D2D3E] text-white rounded-xl font-bold hover:bg-[#3D3D4E] transition-all">
+                        Kateqoriya Yarat
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+}

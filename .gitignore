@@ -28,3 +28,5 @@ tmp/*
 
 Thumbs.db
 db.json
+
+cmd/server/logs/*

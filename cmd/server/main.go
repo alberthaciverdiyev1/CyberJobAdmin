@@ -9,14 +9,15 @@ import (
 )
 
 func main() {
+	homeHdl := handler.HomeHandler{}
+	bannerHdl := handler.NewBannerHandler()
+	blogHdl := handler.NewBlogHandler()
+	categoryHdl := handler.NewCategoryHandler()
 
-	homeHdl := &handler.HomeHandler{}
-	bannerHdl := &handler.BannerHandler{}
-	companyHdl := &handler.CompanyHandler{}
-	filterHdl := &handler.FilterHandler{}
-	blogHdl := &handler.BlogHandler{}
+	companyHdl := handler.CompanyHandler{}
+	filterHdl := handler.FilterHandler{}
 
-	router := routes.NewRouter(homeHdl, bannerHdl, companyHdl, filterHdl, blogHdl)
+	router := routes.NewRouter(homeHdl, *bannerHdl, companyHdl, filterHdl, *blogHdl, *categoryHdl)
 
 	fmt.Println("Server running on http://localhost:8081 ")
 	err := http.ListenAndServe(":8081", router)
