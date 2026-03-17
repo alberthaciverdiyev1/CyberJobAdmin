@@ -10,15 +10,37 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
+
     {
+
         Schema::create('filters', function (Blueprint $table) {
+
             $table->id();
+
             $table->json('name')->nullable();
-            $table->string('key')->nullable();
+
+            $table->foreignId('parent_id')
+
+                ->nullable()
+
+                ->constrained('filters')
+
+                ->onDelete('cascade');
+
+
+            $table->string('key')->nullable()->unique();
+
+
             $table->timestamps();
+
             $table->softDeletes();
+
         });
+
     }
+
+
+
 
     /**
      * Reverse the migrations.
