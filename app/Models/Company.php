@@ -15,4 +15,8 @@ class Company extends Model
     {
         return $this->belongsTo(CompanyCategory::class, 'category_id');
     }
+    public function vacancies()
+    {
+        return $this->hasMany(Vacancy::class, 'company_id');
+    }
 }

@@ -11,4 +11,8 @@ class City extends Model
     protected $casts = [
         'name' => 'array',
     ];
+    public function vacancies()
+    {
+        return $this->hasMany(Vacancy::class, 'city_id');
+    }
 }

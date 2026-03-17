@@ -12,12 +12,19 @@ class Category extends Model
         'name' => 'array',
         'icon' => 'string',
     ];
+
     public function parent(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'parent_id');
     }
+
     public function children()
     {
         return $this->hasMany(Category::class, 'parent_id');
+    }
+
+    public function vacancies()
+    {
+        return $this->hasMany(Vacancy::class, 'category_id');
     }
 }
