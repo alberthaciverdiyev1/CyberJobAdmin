@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Filament\Resources\CompanyCategories\Pages;
+
+use App\Filament\Resources\CompanyCategories\CompanyCategoryResource;
+use Filament\Actions\DeleteAction;
+use Filament\Resources\Pages\EditRecord;
+
+class EditCompanyCategory extends EditRecord
+{
+    protected static string $resource = CompanyCategoryResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            DeleteAction::make(),
+        ];
+    }
+}
