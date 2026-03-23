@@ -16,6 +16,9 @@ class PartnerForm
                 FileUpload::make('image')
                     ->image()
                     ->imageEditor()
+                    ->disk('public')
+                    ->directory('partners')
+                    ->visibility('public')
                     ->required()
                 ->columnSpanFull(),
                 TextInput::make('link'),

@@ -18,6 +18,9 @@ class BannerForm
                 FileUpload::make('image')
                     ->image()
                     ->required()
+                    ->disk('public')
+                    ->directory('banners')
+                    ->visibility('public')
                     ->imageEditor()
                     ->columnSpanFull(),
                 Select::make('location')

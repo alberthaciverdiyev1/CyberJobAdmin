@@ -64,10 +64,14 @@ class CompanyForm
                             FileUpload::make('logo')
                                 ->label('Şirkət Logosu')
                                 ->image()
+                                ->disk('public')
+                                ->visibility('public')
                                 ->directory('companies/logos'),
 
                             FileUpload::make('banner_image')
                                 ->label('Banner Şəkli')
+                                ->disk('public')
+                                ->visibility('public')
                                 ->image()
                                 ->directory('companies/banners'),
                         ])

@@ -22,6 +22,8 @@ class BlogForm
                             ->image()
                             ->imageEditor()
                             ->directory('blogs')
+                            ->disk('public')
+                            ->visibility('public')
                             ->required()
                             ->columnSpanFull(),
                 Tabs::make('Diller')
