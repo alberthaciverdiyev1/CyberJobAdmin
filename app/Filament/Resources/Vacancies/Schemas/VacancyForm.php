@@ -134,6 +134,7 @@ class VacancyForm
                             RichEditor::make('description')
                                 ->label('Təsvir')
                                 ->required(),
+
                         ]),
                     ])->columnSpanFull(),
 
