@@ -30,6 +30,8 @@ class CompanyForm
                                 ->required(),
                             TextInput::make('phone')->tel(),
                             Textarea::make('address')->label('Ünvan')->columnSpanFull(),
+                            TextInput::make('short_address')->label('Qisa Ünvan')->nullable(),
+                            TextInput::make('founded_year')->label('Təsis tarixi(il)')->nullable()->numeric(),
 
                         ]),
 
