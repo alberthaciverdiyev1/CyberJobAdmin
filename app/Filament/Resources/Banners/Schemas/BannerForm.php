@@ -25,9 +25,9 @@ class BannerForm
                     ->columnSpanFull(),
                 Select::make('location')
                     ->options([
-                        'small' => 'Balaca',
-                        'medium' => 'Orta',
-                        'large' => 'Boyuk',
+                        'small' => 'Vakansiya Sehifesi',
+                        'medium' => 'Ana Sehifesi (3)',
+                        'large' => 'Uzun olan',
                     ])
                     ->required(),
                 TextInput::make('link'),
