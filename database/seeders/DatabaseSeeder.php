@@ -18,16 +18,16 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-     //   User::factory()->create([
-     //       'name' => 'Cyber Job',
-      //      'email' => 'admin@cyberjob.az',
-      //      'password' => Hash::make('123456'),
-       // ]);
-        
-                User::factory()->create([
+        User::factory()->create([
             'name' => 'Cyber Job',
-            'email' => 'adjkanskdja@sajshda.asad',
-            'password' => Hash::make('d6a7d@9"as(=_'),
+            'email' => 'admin@cyberjob.az',
+            'password' => Hash::make('123456'),
         ]);
+
+//                User::factory()->create([
+//            'name' => 'Cyber Job',
+//            'email' => 'adjkanskdja@sajshda.asad',
+//            'password' => Hash::make('d6a7d@9"as(=_'),
+//        ]);
     }
 }
