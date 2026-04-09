@@ -16,7 +16,6 @@ class CategoryForm
     {
         return $schema
             ->components([
-                    // SOL: Dil Sekmeleri
                     Tabs::make('Diller')
                         ->tabs([
                             self::makeLanguageTab('Azerbaycan', 'az'),

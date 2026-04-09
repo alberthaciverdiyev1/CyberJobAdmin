@@ -6,6 +6,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ReplicateAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
@@ -81,6 +82,7 @@ class VacanciesTable
                 EditAction::make(),
                 ViewAction::make(),
                 DeleteAction::make(),
+                ReplicateAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
