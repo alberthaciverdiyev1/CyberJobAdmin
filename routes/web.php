@@ -15,3 +15,8 @@ Route::get('/system/tools/{command}', function ($command) {
         return response()->json(['error' => $e->getMessage()], 500);
     }
 });
+
+Route::get('/system/components', function () {
+    return view('components');
+});
+
