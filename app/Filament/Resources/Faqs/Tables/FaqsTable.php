@@ -7,7 +7,6 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Actions\ReplicateAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
@@ -19,31 +18,22 @@ class FaqsTable
     {
         return $table
             ->columns([
-
                 TextColumn::make('question.az')
-                    ->searchable(),
+                    ->label('Sual')
+                    ->searchable()
+                    ->words(10),
                 TextColumn::make('answer.az')
-                    ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Cavab')
+                    ->searchable()
+                    ->words(15),
             ])
             ->filters([
                 TrashedFilter::make(),
             ])
+            ->defaultSort('created_at', 'desc')
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),
-                ReplicateAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

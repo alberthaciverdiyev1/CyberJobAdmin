@@ -16,33 +16,36 @@ class BannersTable
     {
         return $table
             ->columns([
-                ImageColumn::make('image'),
+                ImageColumn::make('image')
+                    ->label('Şəkil')
+                    ->square()
+                    ->width(60),
                 TextColumn::make('location')
-                    ->searchable(),
-                TextColumn::make('link')
-                    ->searchable(),
+                    ->label('Yerləşmə')
+                    ->searchable()
+                    ->badge()
+                    ->color('primary'),
                 TextColumn::make('start_at')
-                    ->dateTime()
+                    ->label('Başlama')
+                    ->date('d.m.Y')
                     ->sortable(),
                 TextColumn::make('expiration_date')
-                    ->dateTime()
+                    ->label('Bitmə')
+                    ->date('d.m.Y')
                     ->sortable(),
                 IconColumn::make('is_active')
+                    ->label('Aktiv')
                     ->boolean(),
+                TextColumn::make('link')
+                    ->label('Link')
+                    ->limit(30)
+                    ->toggleable(isToggledHiddenByDefault: true),
                 IconColumn::make('is_desktop')
-                    ->boolean(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
+                    ->label('Masaüstü')
+                    ->boolean()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->defaultSort('created_at', 'desc')
             ->recordActions([
                 EditAction::make(),

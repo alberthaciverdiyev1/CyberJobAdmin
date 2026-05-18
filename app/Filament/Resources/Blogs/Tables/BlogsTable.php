@@ -7,7 +7,6 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Actions\ReplicateAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
@@ -22,34 +21,31 @@ class BlogsTable
     {
         return $table
             ->columns([
-                ImageColumn::make('image'),
-                TextColumn::make('title.az'),
+                ImageColumn::make('image')
+                    ->label('Şəkil')
+                    ->square()
+                    ->width(60),
+                TextColumn::make('title.az')
+                    ->label('Başlıq')
+                    ->searchable()
+                    ->words(8),
                 TextColumn::make('read_count')
+                    ->label('Oxunma')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 IconColumn::make('is_active')
+                    ->label('Aktiv')
                     ->boolean(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 TrashedFilter::make(),
             ])
+            ->defaultSort('created_at', 'desc')
             ->recordActions([
                 EditAction::make(),
                 ViewAction::make(),
                 DeleteAction::make(),
-                ReplicateAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

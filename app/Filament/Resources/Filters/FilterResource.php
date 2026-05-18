@@ -18,9 +18,17 @@ class FilterResource extends Resource
 {
     protected static ?string $model = Filter::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedFunnel;
 
-    protected static ?string $recordTitleAttribute = 'Filters';
+    protected static ?string $recordTitleAttribute = 'name->az';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Kataloqlar';
+
+    protected static ?string $modelLabel = 'Filtr';
+
+    protected static ?string $pluralModelLabel = 'Filtrlər';
+
+    protected static ?string $navigationLabel = 'Filtrlər';
 
     public static function form(Schema $schema): Schema
     {
@@ -43,6 +51,8 @@ class FilterResource extends Resource
     {
         return [
             'index' => ListFilters::route('/'),
+            'create' => CreateFilter::route('/create'),
+            'edit' => EditFilter::route('/{record}/edit'),
         ];
     }
 }

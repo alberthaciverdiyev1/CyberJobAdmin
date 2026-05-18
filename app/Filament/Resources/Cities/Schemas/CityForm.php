@@ -12,15 +12,18 @@ class CityForm
         return $schema
             ->components([
                 TextInput::make('name.az')
+                    ->label('Ad (AZ)')
                     ->maxLength(255)
                     ->required()
                 ->columnSpanFull(),
                 TextInput::make('name.en')
+                    ->label('Ad (EN)')
                     ->maxLength(255)
                     ->required()
                     ->columnSpanFull(),
 
                 TextInput::make('name.ru')
+                    ->label('Ad (RU)')
                     ->maxLength(255)
                     ->required()
                     ->columnSpanFull(),

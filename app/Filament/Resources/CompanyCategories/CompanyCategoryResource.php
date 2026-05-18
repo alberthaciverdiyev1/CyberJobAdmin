@@ -18,9 +18,17 @@ class CompanyCategoryResource extends Resource
 {
     protected static ?string $model = CompanyCategory::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBuildingOffice2;
 
-    protected static ?string $recordTitleAttribute = 'Company Category';
+    protected static ?string $recordTitleAttribute = 'name->az';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Şirkətlər';
+
+    protected static ?string $modelLabel = 'Şirkət Kateqoriyası';
+
+    protected static ?string $pluralModelLabel = 'Şirkət Kateqoriyaları';
+
+    protected static ?string $navigationLabel = 'Şirkət Kateqoriyaları';
 
     public static function form(Schema $schema): Schema
     {
@@ -43,8 +51,8 @@ class CompanyCategoryResource extends Resource
     {
         return [
             'index' => ListCompanyCategories::route('/'),
-//            'create' => CreateCompanyCategory::route('/create'),
-//            'edit' => EditCompanyCategory::route('/{record}/edit'),
+            'create' => CreateCompanyCategory::route('/create'),
+            'edit' => EditCompanyCategory::route('/{record}/edit'),
         ];
     }
 }

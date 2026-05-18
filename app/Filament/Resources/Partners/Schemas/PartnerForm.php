@@ -14,6 +14,7 @@ class PartnerForm
         return $schema
             ->components([
                 FileUpload::make('image')
+                    ->label('Şəkil')
                     ->image()
                     ->imageEditor()
                     ->disk('public')
@@ -21,8 +22,10 @@ class PartnerForm
                     ->visibility('public')
                     ->required()
                 ->columnSpanFull(),
-                TextInput::make('link'),
+                TextInput::make('link')
+                    ->label('Keçid Linki'),
                 Toggle::make('is_active')
+                    ->label('Aktiv')
                     ->default(true)
                     ->required(),
             ]);

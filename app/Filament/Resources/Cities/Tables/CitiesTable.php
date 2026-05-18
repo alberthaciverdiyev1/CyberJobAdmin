@@ -16,28 +16,15 @@ class CitiesTable
     {
         return $table
             ->columns([
-                TextColumn::make('name.az'),
-
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('name.az')
+                    ->label('Şəhər')
+                    ->searchable(),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
+            ->defaultSort('name->az')
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),
-                ReplicateAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

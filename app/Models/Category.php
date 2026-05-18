@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Category extends Model
 {
-    protected $fillable = ['name', 'icon', 'parent_id'];
+    protected $fillable = ['name', 'icon', 'icon_custom', 'parent_id'];
     protected $casts = [
         'name' => 'array',
         'icon' => 'string',
+        'icon_custom' => 'string',
     ];
 
     public function parent(): BelongsTo

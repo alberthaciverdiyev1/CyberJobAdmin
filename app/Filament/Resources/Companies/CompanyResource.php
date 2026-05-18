@@ -18,9 +18,17 @@ class CompanyResource extends Resource
 {
     protected static ?string $model = Company::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBuildingOffice;
 
-    protected static ?string $recordTitleAttribute = 'Company';
+    protected static ?string $recordTitleAttribute = 'name';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Şirkətlər';
+
+    protected static ?string $modelLabel = 'Şirkət';
+
+    protected static ?string $pluralModelLabel = 'Şirkətlər';
+
+    protected static ?string $navigationLabel = 'Şirkətlər';
 
     public static function form(Schema $schema): Schema
     {

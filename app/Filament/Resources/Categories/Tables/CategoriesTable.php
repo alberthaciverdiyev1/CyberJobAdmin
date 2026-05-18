@@ -2,12 +2,12 @@
 
 namespace App\Filament\Resources\Categories\Tables;
 
+use App\Filament\Resources\Categories\Schemas\CategoryForm;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ReplicateAction;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -17,13 +17,13 @@ class CategoriesTable
     {
         return $table
             ->columns([
-                IconColumn::make('icon')
+                TextColumn::make('icon')
                     ->label('İkon')
-                    ->icon(fn ($state): string => $state ?? 'heroicon-o-tag')
-                    ->searchable(),
+                    ->formatStateUsing(fn ($record): string => self::renderIcon($record))
+                    ->html(),
 
                 TextColumn::make('name.az')
-                ->label('Kateqoriya Adı')
+                    ->label('Kateqoriya Adı')
                     ->searchable(),
                 TextColumn::make('parent.name.az')
                     ->label('Üst Kateqoriya')
@@ -50,5 +50,14 @@ class CategoriesTable
                     DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    private static function renderIcon($record): string
+    {
+        if ($record->icon_custom) {
+            return $record->icon_custom;
+        }
+
+        return CategoryForm::getIconHtml($record->icon);
     }
 }

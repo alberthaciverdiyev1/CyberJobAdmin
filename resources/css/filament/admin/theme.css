@@ -1,5 +1,22 @@
 @import '../../../../vendor/filament/filament/resources/css/theme.css';
+@import '@fortawesome/fontawesome-free/css/all.min.css';
 
 @source '../../../../app/Filament/**/*';
 @source '../../../../resources/views/filament/**/*';
 
+/* Custom theme overrides */
+.fi-sidebar-header {
+    @apply bg-gradient-to-br from-primary-700 to-primary-900;
+}
+
+.fi-sidebar-item-active {
+    @apply border-r-4 border-primary-400;
+}
+
+.fi-topbar {
+    @apply border-b border-gray-200 shadow-sm;
+}
+
+.fi-widget {
+    @apply rounded-xl shadow-sm ring-1 ring-gray-900/5;
+}

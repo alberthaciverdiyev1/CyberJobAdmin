@@ -18,9 +18,17 @@ class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTag;
 
-    protected static ?string $recordTitleAttribute = 'Kateqoriyalar';
+    protected static ?string $recordTitleAttribute = 'name->az';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Kataloqlar';
+
+    protected static ?string $modelLabel = 'Kateqoriya';
+
+    protected static ?string $pluralModelLabel = 'Kateqoriyalar';
+
+    protected static ?string $navigationLabel = 'Kateqoriyalar';
 
     public static function form(Schema $schema): Schema
     {
@@ -43,8 +51,8 @@ class CategoryResource extends Resource
     {
         return [
             'index' => ListCategories::route('/'),
-//            'create' => CreateCategory::route('/create'),
-//            'edit' => EditCategory::route('/{record}/edit'),
+            'create' => CreateCategory::route('/create'),
+            'edit' => EditCategory::route('/{record}/edit'),
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Vacancies;
 
+use App\Filament\Resources\Vacancies\Pages\ViewVacancy;
 use App\Filament\Resources\Vacancies\Pages\CreateVacancy;
 use App\Filament\Resources\Vacancies\Pages\EditVacancy;
 use App\Filament\Resources\Vacancies\Pages\ListVacancies;
@@ -18,9 +19,17 @@ class VacancyResource extends Resource
 {
     protected static ?string $model = Vacancy::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBriefcase;
 
-    protected static ?string $recordTitleAttribute = 'Vacancy';
+    protected static ?string $recordTitleAttribute = 'name';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'İşlər';
+
+    protected static ?string $modelLabel = 'Vakansiya';
+
+    protected static ?string $pluralModelLabel = 'Vakansiyalar';
+
+    protected static ?string $navigationLabel = 'Vakansiyalar';
 
     public static function form(Schema $schema): Schema
     {
@@ -44,6 +53,7 @@ class VacancyResource extends Resource
         return [
             'index' => ListVacancies::route('/'),
             'create' => CreateVacancy::route('/create'),
+            'view' => ViewVacancy::route('/{record}'),
             'edit' => EditVacancy::route('/{record}/edit'),
         ];
     }

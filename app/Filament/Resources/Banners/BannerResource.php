@@ -20,7 +20,15 @@ class BannerResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'Banner';
+    protected static ?string $recordTitleAttribute = 'location';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Məzmun';
+
+    protected static ?string $modelLabel = 'Banner';
+
+    protected static ?string $pluralModelLabel = 'Bannerlər';
+
+    protected static ?string $navigationLabel = 'Bannerlər';
 
     public static function form(Schema $schema): Schema
     {
@@ -43,8 +51,8 @@ class BannerResource extends Resource
     {
         return [
             'index' => ListBanners::route('/'),
-//            'create' => CreateBanner::route('/create'),
-//            'edit' => EditBanner::route('/{record}/edit'),
+            'create' => CreateBanner::route('/create'),
+            'edit' => EditBanner::route('/{record}/edit'),
         ];
     }
 }

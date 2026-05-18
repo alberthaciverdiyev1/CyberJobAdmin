@@ -18,9 +18,17 @@ class PartnerResource extends Resource
 {
     protected static ?string $model = Partner::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserGroup;
 
-    protected static ?string $recordTitleAttribute = 'Partner';
+    protected static ?string $recordTitleAttribute = 'name';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Məzmun';
+
+    protected static ?string $modelLabel = 'Partnyor';
+
+    protected static ?string $pluralModelLabel = 'Partnyorlar';
+
+    protected static ?string $navigationLabel = 'Partnyorlar';
 
     public static function form(Schema $schema): Schema
     {
@@ -43,6 +51,8 @@ class PartnerResource extends Resource
     {
         return [
             'index' => ListPartners::route('/'),
+            'create' => CreatePartner::route('/create'),
+            'edit' => EditPartner::route('/{record}/edit'),
         ];
     }
 }

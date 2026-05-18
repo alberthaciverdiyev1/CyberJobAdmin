@@ -2,8 +2,6 @@
 
 namespace App\Filament\Resources\Settings\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -14,27 +12,26 @@ class SettingsTable
     {
         return $table
             ->columns([
-                TextColumn::make('key')
+                TextColumn::make('site_name')
+                    ->label('Sayt Adı')
                     ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
+                TextColumn::make('mail')
+                    ->label('E-poçt')
+                    ->searchable(),
+                TextColumn::make('phone_number')
+                    ->label('Telefon')
+                    ->searchable(),
+                TextColumn::make('address')
+                    ->label('Ünvan')
+                    ->limit(25)
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
+                TextColumn::make('working_hours')
+                    ->label('İş Saatları')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->recordActions([
                 EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
             ]);
     }
 }

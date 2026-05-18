@@ -23,6 +23,7 @@ class Vacancy extends Model
         'min_age',
         'max_age',
         'email',
+        'application_url',
         'company_id',
         'category_id',
         'is_active',

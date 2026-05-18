@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Blogs;
 
+use App\Filament\Resources\Blogs\Pages\ViewBlog;
 use App\Filament\Resources\Blogs\Pages\CreateBlog;
 use App\Filament\Resources\Blogs\Pages\EditBlog;
 use App\Filament\Resources\Blogs\Pages\ListBlogs;
@@ -20,9 +21,17 @@ class BlogResource extends Resource
 {
     protected static ?string $model = Blog::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedNewspaper;
 
-    protected static ?string $recordTitleAttribute = 'Bloq';
+    protected static ?string $recordTitleAttribute = 'title->az';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Məzmun';
+
+    protected static ?string $modelLabel = 'Bloq';
+
+    protected static ?string $pluralModelLabel = 'Bloqlar';
+
+    protected static ?string $navigationLabel = 'Bloqlar';
 
     public static function form(Schema $schema): Schema
     {
@@ -46,6 +55,7 @@ class BlogResource extends Resource
         return [
             'index' => ListBlogs::route('/'),
             'create' => CreateBlog::route('/create'),
+            'view' => ViewBlog::route('/{record}'),
             'edit' => EditBlog::route('/{record}/edit'),
         ];
     }

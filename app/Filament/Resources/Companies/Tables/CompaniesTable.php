@@ -6,7 +6,6 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -17,41 +16,34 @@ class CompaniesTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
-                TextColumn::make('email')
-                    ->label('Email address')
-                    ->searchable(),
-                TextColumn::make('phone')
-                    ->searchable(),
-                TextColumn::make('address')
-                    ->searchable(),
-                TextColumn::make('logo')
-                    ->searchable(),
-                ImageColumn::make('cover_image'),
-                ImageColumn::make('banner_image'),
-                TextColumn::make('category_id')
-                    ->numeric()
-                    ->sortable(),
+                    ->label('Şirkət Adı')
+                    ->searchable()
+                    ->words(5),
+                TextColumn::make('category.name')
+                    ->label('Kateqoriya')
+                    ->searchable()
+                    ->badge(),
                 IconColumn::make('is_verified')
+                    ->label('Təsdiq')
                     ->boolean(),
                 IconColumn::make('is_active')
+                    ->label('Aktiv')
                     ->boolean(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
+                TextColumn::make('email')
+                    ->label('E-poçt')
+                    ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
+                TextColumn::make('phone')
+                    ->label('Telefon')
+                    ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
+                TextColumn::make('address')
+                    ->label('Ünvan')
+                    ->limit(30)
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
+            ->defaultSort('created_at', 'desc')
             ->recordActions([
                 EditAction::make(),
             ])

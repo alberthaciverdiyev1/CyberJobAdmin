@@ -19,9 +19,17 @@ class SettingResource extends Resource
 {
     protected static ?string $model = Setting::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog6Tooth;
 
-    protected static ?string $recordTitleAttribute = 'Setting';
+    protected static ?string $recordTitleAttribute = 'site_name';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Tənzimləmələr';
+
+    protected static ?string $modelLabel = 'Tənzimləmə';
+
+    protected static ?string $pluralModelLabel = 'Tənzimləmələr';
+
+    protected static ?string $navigationLabel = 'Tənzimləmələr';
 
 
     public static function canCreate(): bool

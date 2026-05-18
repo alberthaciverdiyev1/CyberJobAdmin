@@ -18,9 +18,17 @@ class CityResource extends Resource
 {
     protected static ?string $model = City::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedMapPin;
 
-    protected static ?string $recordTitleAttribute = 'City';
+    protected static ?string $recordTitleAttribute = 'name->az';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Kataloqlar';
+
+    protected static ?string $modelLabel = 'Şəhər';
+
+    protected static ?string $pluralModelLabel = 'Şəhərlər';
+
+    protected static ?string $navigationLabel = 'Şəhərlər';
 
     public static function form(Schema $schema): Schema
     {
@@ -43,6 +51,8 @@ class CityResource extends Resource
     {
         return [
             'index' => ListCities::route('/'),
+            'create' => CreateCity::route('/create'),
+            'edit' => EditCity::route('/{record}/edit'),
         ];
     }
 }

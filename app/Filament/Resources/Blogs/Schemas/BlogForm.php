@@ -26,15 +26,15 @@ class BlogForm
                             ->visibility('public')
                             ->required()
                             ->columnSpanFull(),
-                Tabs::make('Diller')
+                Tabs::make('Dillər')
                     ->tabs([
-                        self::makeLanguageTab('Azerbaycan', 'az'),
+                        self::makeLanguageTab('Azərbaycan', 'az'),
                         self::makeLanguageTab('English', 'en'),
-                        self::makeLanguageTab('Rusça', 'ru'),
+                        self::makeLanguageTab('Русский', 'ru'),
                     ])
                     ->columnSpanFull(),
                         Toggle::make('is_active')
-                            ->label('Aktif mi?')
+                            ->label('Aktiv')
                             ->default(true)
                             ->required(),
                     ])->columnSpanFull(),
@@ -48,11 +48,11 @@ class BlogForm
         return Tabs\Tab::make($label)
             ->schema([
                 TextInput::make("title.{$code}")
-                    ->label("Title ({$label})")
+                    ->label("Başlıq ({$label})")
                     ->required($code === 'az'),
 
                 RichEditor::make("description.{$code}")
-                    ->label("Description ({$label})")
+                    ->label("Məzmun ({$label})")
                     ->required($code === 'az'),
             ]);
     }

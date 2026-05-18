@@ -49,6 +49,12 @@ class VacancyForm
                             TextInput::make('email')
                                 ->label('Email')
                                 ->email(),
+
+                            TextInput::make('application_url')
+                                ->label('Müraciət Linki')
+                                ->url()
+                                ->placeholder('https://example.com/apply'),
+
                             DateTimePicker::make('expire_date')
                                 ->label('Bitmə Tarixi')
                                 ->default(now()->addDays(30))

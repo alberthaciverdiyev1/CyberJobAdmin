@@ -17,33 +17,33 @@ class FaqForm
                     Tabs\Tab::make('AZ')->schema([
                         TextInput::make('question.az')
                             ->maxLength(255)
-                            ->label('Sual')
+                            ->label('Sual (AZ)')
                             ->required()
                             ->columnSpanFull(),
                         Textarea::make('answer.az')
-                            ->label('Cavab')
+                            ->label('Cavab (AZ)')
                             ->required()->columnSpanFull(),
                     ]),
                     Tabs\Tab::make('EN')->schema([
                         TextInput::make('question.en')
                             ->maxLength(255)
-                            ->label('Question')
+                            ->label('Sual (EN)')
                             ->required()
                             ->columnSpanFull(),
                         Textarea::make('answer.en')
-                            ->label('Answer')
+                            ->label('Cavab (EN)')
                             ->required()
                             ->columnSpanFull(),
                     ]),
                     Tabs\Tab::make('RU')->schema([
                         TextInput::make('question.ru')
                             ->maxLength(255)
-                            ->label('')
+                            ->label('Sual (RU)')
                             ->required()
                             ->columnSpanFull(),
                         Textarea::make('answer.ru')
                             ->required()
-                            ->label('')
+                            ->label('Cavab (RU)')
                             ->columnSpanFull(),
                     ])
 

@@ -20,9 +20,17 @@ class FaqResource extends Resource
 {
     protected static ?string $model = Faq::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedQuestionMarkCircle;
 
-    protected static ?string $recordTitleAttribute = 'Faq';
+    protected static ?string $recordTitleAttribute = 'question->az';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Məzmun';
+
+    protected static ?string $modelLabel = 'FAQ';
+
+    protected static ?string $pluralModelLabel = 'FAQ-lar';
+
+    protected static ?string $navigationLabel = 'FAQ-lar';
 
     public static function form(Schema $schema): Schema
     {
@@ -45,6 +53,8 @@ class FaqResource extends Resource
     {
         return [
             'index' => ListFaqs::route('/'),
+            'create' => CreateFaq::route('/create'),
+            'edit' => EditFaq::route('/{record}/edit'),
         ];
     }
 

@@ -24,23 +24,29 @@ class BannerForm
                     ->imageEditor()
                     ->columnSpanFull(),
                 Select::make('location')
+                    ->label('Yerləşmə')
                     ->options([
-                        'small' => 'Vakansiya Sehifesi',
-                        'medium' => 'Ana Sehifesi (3)',
-                        'large' => 'Uzun olan',
+                        'small' => 'Vakansiya Səhifəsi',
+                        'medium' => 'Ana Səhifə (3)',
+                        'large' => 'Uzun Banner',
                     ])
                     ->required(),
-                TextInput::make('link'),
+                TextInput::make('link')
+                    ->label('Link'),
                 DateTimePicker::make('start_at')
+                    ->label('Başlama Tarixi')
                     ->default(now())
                     ->required(),
                 DateTimePicker::make('expiration_date')
+                    ->label('Bitmə Tarixi')
                     ->default(now()->addDays(30))
                     ->required(),
                 Toggle::make('is_active')
+                    ->label('Aktiv')
                     ->default(true)
                     ->required(),
                 Toggle::make('is_desktop')
+                    ->label('Masaüstü üçün')
                     ->required(),
             ]);
     }
