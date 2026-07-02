@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Filament\Resources\SubscriptionPlans\Pages;
+
+use App\Filament\Resources\SubscriptionPlans\SubscriptionPlanResource;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
+use Filament\Resources\Pages\ViewRecord;
+
+class ViewSubscriptionPlan extends ViewRecord
+{
+    protected static string $resource = SubscriptionPlanResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            EditAction::make(),
+            DeleteAction::make(),
+        ];
+    }
+}
