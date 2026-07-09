@@ -42,6 +42,16 @@ class SubscriptionPlansTable
                     ->label('Yeni Qiymət')
                     ->money('AZN'),
 
+                TextColumn::make('discount_start')
+                    ->label('Endirim Başlama')
+                    ->date()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('discount_end')
+                    ->label('Endirim Bitmə')
+                    ->date()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 IconColumn::make('is_active')
                     ->label('Aktiv')
                     ->boolean(),

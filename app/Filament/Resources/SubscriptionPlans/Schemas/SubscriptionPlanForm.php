@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\SubscriptionPlans\Schemas;
 
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -30,6 +32,15 @@ class SubscriptionPlanForm
                     ->label('Yeni Qiymət')
                     ->numeric()
                     ->required(),
+
+                Section::make('Endirim Tarixi')
+                    ->description('Boş buraxılarsa endirimli qiymət hər zaman göstərilir')
+                    ->schema([
+                        DatePicker::make('discount_start')
+                            ->label('Başlama Tarixi'),
+                        DatePicker::make('discount_end')
+                            ->label('Bitmə Tarixi'),
+                    ])->columns(2),
 
                 Select::make('type')
                     ->label('Tip')
