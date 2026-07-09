@@ -33,12 +33,6 @@ class CategoryForm
                     ->sets(['fontawesome-solid'])
                     ->searchable()
                     ->columnSpanFull(),
-
-                TextInput::make('icon_custom')
-                    ->label('və ya əl ilə HTML ikon daxil edin')
-                    ->placeholder('Məsələn: <i class="fa-solid fa-code"></i>')
-                    ->columnSpanFull()
-                    ->helperText('İkon seçicidə olmayan xüsusi bir ikon əlavə etmək üçün HTML kodunu yazın'),
             ]);
     }
 

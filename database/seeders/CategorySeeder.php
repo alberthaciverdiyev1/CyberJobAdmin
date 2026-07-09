@@ -10,16 +10,16 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $parentCategories = [
-            ['az' => 'Texnologiya', 'en' => 'Technology', 'icon' => 'heroicon-o-computer-desktop'],
-            ['az' => 'Biznes və İdarəetmə', 'en' => 'Business & Management', 'icon' => 'heroicon-o-briefcase'],
-            ['az' => 'Maliyyə', 'en' => 'Finance', 'icon' => 'heroicon-o-currency-dollar'],
-            ['az' => 'Səhiyyə', 'en' => 'Healthcare', 'icon' => 'heroicon-o-heart'],
-            ['az' => 'Təhsil', 'en' => 'Education', 'icon' => 'heroicon-o-academic-cap'],
-            ['az' => 'İnşaat və Daşınmaz Əmlak', 'en' => 'Construction & Real Estate', 'icon' => 'heroicon-o-building-office'],
-            ['az' => 'Marketinq və PR', 'en' => 'Marketing & PR', 'icon' => 'heroicon-o-megaphone'],
-            ['az' => 'Logistika və Nəqliyyat', 'en' => 'Logistics & Transportation', 'icon' => 'heroicon-o-truck'],
-            ['az' => 'Xidmət Sektoru', 'en' => 'Service Sector', 'icon' => 'heroicon-o-hand-raised'],
-            ['az' => 'Hüquq və Hüquqşünaslıq', 'en' => 'Legal & Law', 'icon' => 'heroicon-o-scale'],
+            ['az' => 'Texnologiya', 'en' => 'Technology', 'icon' => 'fas-display'],
+            ['az' => 'Biznes və İdarəetmə', 'en' => 'Business & Management', 'icon' => 'fas-briefcase'],
+            ['az' => 'Maliyyə', 'en' => 'Finance', 'icon' => 'fas-dollar-sign'],
+            ['az' => 'Səhiyyə', 'en' => 'Healthcare', 'icon' => 'fas-heart'],
+            ['az' => 'Təhsil', 'en' => 'Education', 'icon' => 'fas-graduation-cap'],
+            ['az' => 'İnşaat və Daşınmaz Əmlak', 'en' => 'Construction & Real Estate', 'icon' => 'fas-building'],
+            ['az' => 'Marketinq və PR', 'en' => 'Marketing & PR', 'icon' => 'fas-bullhorn'],
+            ['az' => 'Logistika və Nəqliyyat', 'en' => 'Logistics & Transportation', 'icon' => 'fas-truck'],
+            ['az' => 'Xidmət Sektoru', 'en' => 'Service Sector', 'icon' => 'fas-hand'],
+            ['az' => 'Hüquq və Hüquqşünaslıq', 'en' => 'Legal & Law', 'icon' => 'fas-scale-balanced'],
         ];
 
         $childCategories = [

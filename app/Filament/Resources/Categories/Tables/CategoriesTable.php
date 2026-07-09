@@ -55,10 +55,6 @@ class CategoriesTable
 
     private static function renderIcon($record): string
     {
-        if ($record->icon_custom) {
-            return $record->icon_custom;
-        }
-
         if ($record->icon) {
             return generate_icon_html($record->icon)?->toHtml() ?? $record->icon;
         }
