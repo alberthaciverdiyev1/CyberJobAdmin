@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Categories\Tables;
 
-use App\Filament\Resources\Categories\Schemas\CategoryForm;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -10,6 +9,8 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ReplicateAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+
+use function Filament\Support\generate_icon_html;
 
 class CategoriesTable
 {
@@ -58,6 +59,10 @@ class CategoriesTable
             return $record->icon_custom;
         }
 
-        return CategoryForm::getIconHtml($record->icon);
+        if ($record->icon) {
+            return generate_icon_html($record->icon)?->toHtml() ?? $record->icon;
+        }
+
+        return '';
     }
 }
