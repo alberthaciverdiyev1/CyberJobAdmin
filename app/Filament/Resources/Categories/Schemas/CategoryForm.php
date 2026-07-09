@@ -30,6 +30,7 @@ class CategoryForm
                 Select::make('icon')
                     ->label('İkon')
                     ->options(fn (): array => self::getFontAwesomeIcons())
+                    ->allowHtml()
                     ->searchable()
                     ->columnSpanFull(),
             ]);
@@ -62,12 +63,24 @@ class CategoryForm
             if (pathinfo($file, PATHINFO_EXTENSION) === 'svg') {
                 $name = pathinfo($file, PATHINFO_FILENAME);
                 $value = 'fas-' . $name;
-                $label = self::formatIconName($name);
+
+                $svgContent = file_get_contents($path . '/' . $file);
+                $label = self::formatIconLabel($name, $svgContent);
                 $icons[$value] = $label;
             }
         }
 
         return $icons;
+    }
+
+    private static function formatIconLabel(string $name, string $svg): string
+    {
+        return '<div class="flex items-center gap-3">'
+            . '<span style="width:20px;height:20px;display:inline-flex;align-items:center;color:rgb(107,114,128);flex-shrink:0">'
+            . $svg
+            . '</span>'
+            . '<span>' . self::formatIconName($name) . '</span>'
+            . '</div>';
     }
 
     private static function formatIconName(string $name): string
