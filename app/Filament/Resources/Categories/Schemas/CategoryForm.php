@@ -6,7 +6,6 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Schema;
-use Guava\IconPicker\Forms\Components\IconPicker;
 
 class CategoryForm
 {
@@ -28,9 +27,9 @@ class CategoryForm
                     ->searchable()
                     ->preload(),
 
-                IconPicker::make('icon')
+                Select::make('icon')
                     ->label('İkon')
-                    ->sets(['fontawesome-solid'])
+                    ->options(fn (): array => self::getFontAwesomeIcons())
                     ->searchable()
                     ->columnSpanFull(),
             ]);
@@ -45,5 +44,36 @@ class CategoryForm
                     ->required($code === 'az')
                     ->placeholder($label . ' dilində ad daxil edin...'),
             ]);
+    }
+
+    private static function getFontAwesomeIcons(): array
+    {
+        $path = resource_path('icons/blade-fontawesome/solid');
+        $icons = [];
+
+        if (!is_dir($path)) {
+            return $icons;
+        }
+
+        $files = scandir($path);
+        sort($files);
+
+        foreach ($files as $file) {
+            if (pathinfo($file, PATHINFO_EXTENSION) === 'svg') {
+                $name = pathinfo($file, PATHINFO_FILENAME);
+                $value = 'fas-' . $name;
+                $label = self::formatIconName($name);
+                $icons[$value] = $label;
+            }
+        }
+
+        return $icons;
+    }
+
+    private static function formatIconName(string $name): string
+    {
+        return str($name)
+            ->replace(['-', '_'], ' ')
+            ->title();
     }
 }
