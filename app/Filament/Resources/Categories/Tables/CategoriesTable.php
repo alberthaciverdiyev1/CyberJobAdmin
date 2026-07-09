@@ -9,6 +9,7 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ReplicateAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\HtmlString;
 
 class CategoriesTable
 {
@@ -18,7 +19,7 @@ class CategoriesTable
             ->columns([
                 TextColumn::make('icon')
                     ->label('İkon')
-                    ->formatStateUsing(fn ($record): string => self::renderIcon($record))
+                    ->formatStateUsing(fn ($record): ?HtmlString => self::renderIcon($record))
                     ->html()
                     ->width(1),
 
@@ -52,22 +53,28 @@ class CategoriesTable
             ]);
     }
 
-    private static function renderIcon($record): string
+    private static function renderIcon($record): ?HtmlString
     {
         if (! $record->icon) {
-            return '';
+            return null;
         }
 
-        $iconPath = resource_path('icons/blade-fontawesome/solid/' . str_replace('fas-', '', $record->icon) . '.svg');
+        $iconName = str_replace('fas-', '', $record->icon);
+        $iconPath = resource_path('icons/blade-fontawesome/solid/' . $iconName . '.svg');
 
         if (! file_exists($iconPath)) {
-            return '';
+            return new HtmlString(e($record->icon));
         }
 
         $svg = file_get_contents($iconPath);
 
-        return '<div class="flex items-center justify-center" style="width:24px;height:24px;color:rgb(107,114,128)">'
-            . $svg
-            . '</div>';
+        // Add explicit width/height so the SVG renders inline properly
+        $svg = str_replace(
+            '<svg',
+            '<svg width="24" height="24"',
+            $svg,
+        );
+
+        return new HtmlString($svg);
     }
 }
