@@ -10,8 +10,6 @@ use Filament\Actions\ReplicateAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-use function Filament\Support\generate_icon_html;
-
 class CategoriesTable
 {
     public static function configure(Table $table): Table
@@ -21,7 +19,8 @@ class CategoriesTable
                 TextColumn::make('icon')
                     ->label('İkon')
                     ->formatStateUsing(fn ($record): string => self::renderIcon($record))
-                    ->html(),
+                    ->html()
+                    ->width(1),
 
                 TextColumn::make('name.az')
                     ->label('Kateqoriya Adı')
@@ -55,10 +54,20 @@ class CategoriesTable
 
     private static function renderIcon($record): string
     {
-        if ($record->icon) {
-            return generate_icon_html($record->icon)?->toHtml() ?? $record->icon;
+        if (! $record->icon) {
+            return '';
         }
 
-        return '';
+        $iconPath = resource_path('icons/blade-fontawesome/solid/' . str_replace('fas-', '', $record->icon) . '.svg');
+
+        if (! file_exists($iconPath)) {
+            return '';
+        }
+
+        $svg = file_get_contents($iconPath);
+
+        return '<div class="flex items-center justify-center" style="width:24px;height:24px;color:rgb(107,114,128)">'
+            . $svg
+            . '</div>';
     }
 }

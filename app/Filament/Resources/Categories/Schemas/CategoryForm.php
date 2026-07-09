@@ -31,6 +31,7 @@ class CategoryForm
                     ->label('İkon')
                     ->options(fn (): array => self::getFontAwesomeIcons())
                     ->allowHtml()
+                    ->native(false)
                     ->searchable()
                     ->columnSpanFull(),
             ]);
