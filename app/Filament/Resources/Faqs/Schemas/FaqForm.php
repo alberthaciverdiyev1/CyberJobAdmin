@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Faqs\Schemas;
 
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Tabs;
@@ -48,6 +49,15 @@ class FaqForm
                     ])
 
                 ])->columnSpanFull(),
+
+                Select::make('type')
+                    ->label('Tip')
+                    ->options([
+                        'service' => 'Xidmətlər',
+                        'rating' => 'Reytinq',
+                    ])
+                    ->default('service')
+                    ->required(),
             ]);
     }
 }

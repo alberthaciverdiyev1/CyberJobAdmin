@@ -10,7 +10,7 @@ class Faq extends Model
     use SoftDeletes;
 
     protected $table = 'faqs';
-    protected $fillable = ['question', 'answer'];
+    protected $fillable = ['question', 'answer', 'type'];
     protected $casts = [
         'question' => 'array',
         'answer' => 'array',
