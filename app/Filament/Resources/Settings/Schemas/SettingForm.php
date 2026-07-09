@@ -90,6 +90,18 @@ class SettingForm
                                 TextInput::make('linkedin_url')
                                     ->label('LinkedIn URL')
                                     ->url(),
+
+                                TextInput::make('tiktok_url')
+                                    ->label('TikTok URL')
+                                    ->url(),
+
+                                TextInput::make('youtube_url')
+                                    ->label('YouTube URL')
+                                    ->url(),
+
+                                TextInput::make('twitter_url')
+                                    ->label('Twitter / X URL')
+                                    ->url(),
                             ])->columns(2),
 
                         Tabs\Tab::make('SEO')
