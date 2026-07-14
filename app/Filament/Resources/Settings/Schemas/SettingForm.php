@@ -59,6 +59,21 @@ class SettingForm
                                     ->label('İş Saatları')
                                     ->placeholder('09:00 - 18:00')
                                     ->hint('Nümunə: 09:00 - 18:00'),
+
+                                Textarea::make('about_us->az')
+                                    ->label('Haqqımızda (AZ)')
+                                    ->rows(4)
+                                    ->columnSpanFull(),
+
+                                Textarea::make('about_us->en')
+                                    ->label('About Us (EN)')
+                                    ->rows(4)
+                                    ->columnSpanFull(),
+
+                                Textarea::make('about_us->ru')
+                                    ->label('О нас (RU)')
+                                    ->rows(4)
+                                    ->columnSpanFull(),
                             ])->columns(2),
 
                         Tabs\Tab::make('Sosial Media')
