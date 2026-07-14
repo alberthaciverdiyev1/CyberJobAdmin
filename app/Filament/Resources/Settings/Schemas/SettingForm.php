@@ -44,12 +44,10 @@ class SettingForm
 
                                 TextInput::make('phone_number')
                                     ->label('Telefon Nömrəsi')
-                                    ->tel()
                                     ->placeholder('+994 50 123 45 67'),
 
                                 TextInput::make('mail')
                                     ->label('E-poçt Ünvanı')
-                                    ->email()
                                     ->placeholder('info@jobing.az'),
 
                                 TextInput::make('address')
@@ -68,40 +66,31 @@ class SettingForm
                             ->label('Sosial Media')
                             ->schema([
                                 TextInput::make('whatsapp_number')
-                                    ->label('WhatsApp Nömrəsi')
-                                    ->tel(),
+                                    ->label('WhatsApp Nömrəsi'),
 
                                 TextInput::make('whatsapp_business_number')
-                                    ->label('WhatsApp Business')
-                                    ->tel(),
+                                    ->label('WhatsApp Business'),
 
                                 TextInput::make('telegram_number')
-                                    ->label('Telegram Nömrəsi')
-                                    ->tel(),
+                                    ->label('Telegram'),
 
                                 TextInput::make('instagram_url')
-                                    ->label('Instagram URL')
-                                    ->url(),
+                                    ->label('Instagram URL'),
 
                                 TextInput::make('facebook_url')
-                                    ->label('Facebook URL')
-                                    ->url(),
+                                    ->label('Facebook URL'),
 
                                 TextInput::make('linkedin_url')
-                                    ->label('LinkedIn URL')
-                                    ->url(),
+                                    ->label('LinkedIn URL'),
 
                                 TextInput::make('tiktok_url')
-                                    ->label('TikTok URL')
-                                    ->url(),
+                                    ->label('TikTok URL'),
 
                                 TextInput::make('youtube_url')
-                                    ->label('YouTube URL')
-                                    ->url(),
+                                    ->label('YouTube URL'),
 
                                 TextInput::make('twitter_url')
-                                    ->label('Twitter / X URL')
-                                    ->url(),
+                                    ->label('Twitter / X URL'),
                             ])->columns(2),
 
                         Tabs\Tab::make('SEO')
