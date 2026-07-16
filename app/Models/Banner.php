@@ -14,4 +14,16 @@ class Banner extends Model
         'is_active' => 'boolean',
         'is_desktop' => 'boolean',
     ];
+
+    protected static function booted(): void
+    {
+        static::saved(function (Banner $banner) {
+            if ($banner->location === 'home_hero' && $banner->is_active) {
+                static::where('id', '!=', $banner->id)
+                    ->where('location', 'home_hero')
+                    ->where('is_active', true)
+                    ->update(['is_active' => false]);
+            }
+        });
+    }
 }

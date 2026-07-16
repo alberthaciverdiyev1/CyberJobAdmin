@@ -26,6 +26,7 @@ class BannerForm
                 Select::make('location')
                     ->label('Yerləşmə')
                     ->options([
+                        'home_hero' => 'Ana Səhifə Hero',
                         'small' => 'Vakansiya Səhifəsi',
                         'medium' => 'Ana Səhifə (3)',
                         'large' => 'Uzun Banner',
